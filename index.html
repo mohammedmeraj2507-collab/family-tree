@@ -5,90 +5,194 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>বংশতালিকা - Tentulia Gram Panchayat</title>
   <style>
-    body { font-family: 'SolaimanLipi', Arial, sans-serif; background: #f9fafb; margin: 0; padding: 20px; text-align: center; }
-    .header { margin-bottom: 20px; }
-    .header h3 { margin: 2px 0; color: #444; font-weight: normal; }
-    .header h2 { margin: 10px 0; font-size: 24px; border-bottom: 2px dashed #666; display: inline-block; padding-bottom: 4px; }
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 16px; text-align: center; }
     
-    /* Tree Layout */
+    .container { max-width: 1100px; margin: auto; }
+    .card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); text-align: left; }
+    .card h3 { margin-top: 0; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+    
+    .form-group { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .form-group input, .form-group select { flex: 1; min-width: 180px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+    .btn { background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
+    .btn:hover { background: #047857; }
+    .btn-print { background: #2563eb; margin-top: 15px; }
+    
+    .header-title { text-align: center; margin-bottom: 25px; }
+    .header-title h3 { margin: 2px 0; color: #475569; }
+    .header-title h2 { margin: 8px 0; color: #0f172a; border-bottom: 2px dashed #0f172a; display: inline-block; padding-bottom: 4px; }
+
+    /* Org-Chart Structure */
+    .tree-container { overflow-x: auto; padding: 20px 0; text-align: center; }
     .tf-tree { display: inline-block; text-align: center; }
     .tf-tree ul { display: flex; padding-top: 20px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
-    .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; }
+    .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 8px 0 8px; }
     
-    /* Connectors (Connecting Lines) */
-    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #333; width: 50%; height: 20px; }
-    .tf-tree li::after { right: auto; left: 50%; border-left: 2px solid #333; }
+    /* Connection Lines */
+    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #475569; width: 50%; height: 20px; }
+    .tf-tree li::after { right: auto; left: 50%; border-left: 2px solid #475569; }
     .tf-tree li:only-child::after, .tf-tree li:only-child::before { display: none; }
     .tf-tree li:only-child { padding-top: 0; }
     .tf-tree li:first-child::before, .tf-tree li:last-child::after { border: none; }
-    .tf-tree li:last-child::before { border-right: 2px solid #333; border-radius: 0 5px 0 0; }
+    .tf-tree li:last-child::before { border-right: 2px solid #475569; border-radius: 0 5px 0 0; }
     .tf-tree li:first-child::after { border-radius: 5px 0 0 0; }
-    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #333; width: 0; height: 20px; }
+    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #475569; width: 0; height: 20px; }
     
-    /* Node Styling */
+    /* Person Node Box */
     .node {
-      border: 2px solid #333;
-      padding: 8px 14px;
-      display: inline-block;
-      border-radius: 6px;
+      border: 2px solid #1e293b;
+      padding: 10px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 8px;
       background: #fff;
-      font-weight: bold;
-      min-width: 70px;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      min-width: 100px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: relative;
     }
-    .applicant { background: #e0f2fe; border-color: #0284c7; color: #0369a1; }
+    .node img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 6px; border: 1px solid #cbd5e1; }
+    .avatar-placeholder { width: 50px; height: 50px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 6px; }
+    .node-name { font-weight: bold; font-size: 15px; color: #0f172a; }
+    .node-id { font-size: 12px; color: #64748b; margin-top: 2px; }
 
     @media print {
-      body { background: #fff; }
-      .no-print { display: none; }
+      .no-print { display: none !important; }
+      body { background: #fff; padding: 0; }
+      .card { box-shadow: none; border: none; padding: 0; }
     }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <h3>Tentulia Gram Panchayat</h3>
-    <h3>Tentulia, Murshidabad</h3>
-    <h2>-: বংশতালিকা :-</h2>
+<div class="container">
+  <!-- ইনপুট প্যানেল -->
+  <div class="card no-print">
+    <h3>নতুন সদস্য যোগ করুন</h3>
+    <div class="form-group">
+      <input id="name" type="text" placeholder="সদস্যের নাম (আবশ্যক)">
+      <input id="idno" type="text" placeholder="আইডি নম্বর (ঐচ্ছিক)">
+      <select id="parent">
+        <option value="">মূল অভিভাবক / দাদা (Root)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input id="photo" type="file" accept="image/*">
+      <button class="btn" onclick="addMember()">সদস্য যোগ করুন</button>
+    </div>
   </div>
 
-  <div class="tf-tree">
-    <ul>
-      <li>
-        <div class="node">দাদা</div>
-        <ul>
-          <!-- Generation 2 -->
-          <li><div class="node">ছেলে</div></li>
-          <li>
-            <div class="node">ছেলে</div>
-            <ul>
-              <!-- Generation 3 -->
-              <li><div class="node">ছেলে</div></li>
-              <li><div class="node">মেয়ে</div></li>
-              <li>
-                <div class="node">ছেলে</div>
-                <ul>
-                  <!-- Generation 4 -->
-                  <li>
-                    <div class="node applicant">ছেলে (আবেদনকারী)</div>
-                  </li>
-                  <li><div class="node">ছেলে</div></li>
-                  <li><div class="node">মেয়ে</div></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li><div class="node">ছেলে</div></li>
-          <li><div class="node">মেয়ে</div></li>
-          <li><div class="node">মেয়ে</div></li>
-        </ul>
-      </li>
-    </ul>
+  <!-- প্রিন্টযোগ্য বংশতালিকা -->
+  <div class="card">
+    <div class="header-title">
+      <h3>Tentulia Gram Panchayat</h3>
+      <h3>Tentulia, Murshidabad</h3>
+      <h2>-: বংশতালিকা :-</h2>
+    </div>
+
+    <div class="tree-container">
+      <div id="tree" class="tf-tree"></div>
+    </div>
   </div>
 
-  <br><br>
-  <button class="no-print" onclick="window.print()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">প্রিন্ট করুন</button>
+  <button class="btn btn-print no-print" onclick="window.print()">প্রিন্ট করুন</button>
+</div>
+
+<script>
+  let members = [];
+
+  function addMember() {
+    const nameInput = document.getElementById('name');
+    const idnoInput = document.getElementById('idno');
+    const parentSelect = document.getElementById('parent');
+    const photoInput = document.getElementById('photo');
+
+    const name = nameInput.value.trim();
+    const idno = idnoInput.value.trim();
+    const parent = parentSelect.value;
+    const file = photoInput.files[0];
+
+    if (!name) {
+      alert('দয়া করে সদস্যের নাম লিখুন!');
+      return;
+    }
+
+    const saveAndRefresh = (imgData) => {
+      const newMember = {
+        id: 'id_' + Date.now(),
+        name: name,
+        idno: idno,
+        parent: parent,
+        img: imgData || ''
+      };
+      members.push(newMember);
+
+      // রিসেট ইনপুট
+      nameInput.value = '';
+      idnoInput.value = '';
+      photoInput.value = '';
+
+      updateUI();
+    };
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        saveAndRefresh(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      saveAndRefresh('');
+    }
+  }
+
+  function updateUI() {
+    // ১. ড্রপডাউন আপডেট করা
+    const parentSelect = document.getElementById('parent');
+    parentSelect.innerHTML = '<option value="">মূল অভিভাবক / দাদা (Root)</option>';
+    members.forEach(m => {
+      parentSelect.innerHTML += `<option value="${m.id}">${m.name}</option>`;
+    });
+
+    // ২. বংশতালিকা রেন্ডার করা
+    const roots = members.filter(m => !m.parent);
+    const treeDiv = document.getElementById('tree');
+
+    if (roots.length === 0) {
+      treeDiv.innerHTML = '<p style="color:#94a3b8;">এখনো কোনো সদস্য যোগ করা হয়নি। উপরে তথ্য দিয়ে সদস্য যোগ করুন।</p>';
+      return;
+    }
+
+    treeDiv.innerHTML = '<ul>' + roots.map(r => renderNode(r)).join('') + '</ul>';
+  }
+
+  function renderNode(person) {
+    const children = members.filter(m => m.parent === person.id);
+    
+    let imageHTML = person.img 
+      ? `<img src="${person.img}" alt="${person.name}">` 
+      : `<div class="avatar-placeholder">👤</div>`;
+
+    let idHTML = person.idno ? `<div class="node-id">ID: ${person.idno}</div>` : '';
+
+    let html = `<li>
+      <div class="node">
+        ${imageHTML}
+        <div class="node-name">${person.name}</div>
+        ${idHTML}
+      </div>`;
+
+    if (children.length > 0) {
+      html += '<ul>' + children.map(c => renderNode(c)).join('') + '</ul>';
+    }
+
+    html += '</li>';
+    return html;
+  }
+
+  // প্রাথমিক অবস্থা
+  updateUI();
+</script>
 
 </body>
-                </html>
-    
+</html>

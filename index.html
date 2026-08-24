@@ -1,1 +1,31 @@
-
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>বংশতালিকা</title>
+<style>
+body{font-family:Arial;background:#f3f4f6;margin:0;padding:16px}.wrap{max-width:900px;margin:auto}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+input,select,button{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+button{background:#166534;color:#fff;border:none;font-weight:bold}
+.tree ul{list-style:none;padding-left:22px;border-left:2px solid #888}.tree li{margin:14px 0;position:relative}
+.tree li:before{content:"";position:absolute;left:-22px;top:24px;width:20px;border-top:2px solid #888}
+.person{display:flex;align-items:center;gap:10px}.person img,.avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;background:#ddd;border:2px solid #166534}
+small{color:#555}
+</style></head><body><div class="wrap">
+<div class="card"><h2 id="gpTitle">পঞ্চায়েতের নাম</h2><div id="gpAddr">ঠিকানা</div>
+<input id="gp" placeholder="পঞ্চায়েতের নাম"><input id="addr" placeholder="ঠিকানা">
+<button onclick="saveHeader()">সংরক্ষণ</button></div>
+<div class="card"><h3>নতুন সদস্য</h3>
+<input id="name" placeholder="নাম"><input id="idno" placeholder="আইডি নম্বর">
+<input id="photo" type="file" accept="image/*"><select id="parent"><option value="">মূল ব্যক্তি</option></select>
+<button onclick="addMember()">সদস্য যোগ করুন</button></div>
+<div class="card"><h3>বংশতালিকা</h3><div id="tree" class="tree"></div></div></div>
+<script>
+let members=[];
+function saveHeader(){gpTitle.textContent=gp.value||'পঞ্চায়েতের নাম';gpAddr.textContent=addr.value||'ঠিকানা';}
+function addMember(){const n=name.value.trim(),id=idno.value.trim(),p=parent.value,f=photo.files[0];if(!n){alert('নাম লিখুন');return;}
+const done=(img)=>{members.push({id:'m'+Date.now()+Math.random(),name:n,idno:id,parent:p,img});name.value='';idno.value='';photo.value='';refresh();};
+if(f){const r=new FileReader();r.onload=e=>done(e.target.result);r.readAsDataURL(f);}else done('');}
+function refresh(){parent.innerHTML='<option value="">মূল ব্যক্তি</option>';members.forEach(m=>parent.innerHTML+=`<option value="${m.id}">${m.name}</option>`);
+const roots=members.filter(m=>!m.parent);tree.innerHTML='<ul>'+roots.map(render).join('')+'</ul>';}
+function render(p){const kids=members.filter(m=>m.parent===p.id);return `<li><div class="person">${p.img?`<img src="${p.img}">`:'<div class="avatar"></div>'}<div><b>${p.name}</b><br><small>ID: ${p.idno||'-'}</small></div></div>${kids.length?`<ul>${kids.map(render).join('')}</ul>`:''}</li>`;}
+</script></body></html>

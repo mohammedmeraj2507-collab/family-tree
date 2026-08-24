@@ -29,3 +29,4 @@ function refresh(){parent.innerHTML='<option value="">মূল ব্যক্�
 const roots=members.filter(m=>!m.parent);tree.innerHTML='<ul>'+roots.map(render).join('')+'</ul>';}
 function render(p){const kids=members.filter(m=>m.parent===p.id);return `<li><div class="person">${p.img?`<img src="${p.img}">`:'<div class="avatar"></div>'}<div><b>${p.name}</b><br><small>ID: ${p.idno||'-'}</small></div></div>${kids.length?`<ul>${kids.map(render).join('')}</ul>`:''}</li>`;}
 </script></body></html>
+final submitted

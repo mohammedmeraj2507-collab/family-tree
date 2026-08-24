@@ -8,12 +8,12 @@
     * { box-sizing: border-box; }
     body { font-family: Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 16px; text-align: center; }
     
-    .container { max-width: 1100px; margin: auto; }
+    .container { max-width: 1200px; margin: auto; }
     .card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); text-align: left; }
     .card h3 { margin-top: 0; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
     
     .form-group { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
-    .form-group input, .form-group select { flex: 1; min-width: 180px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+    .form-group input, .form-group select { flex: 1; min-width: 160px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
     .btn { background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
     .btn:hover { background: #047857; }
     .btn-print { background: #2563eb; margin-top: 15px; }
@@ -47,14 +47,15 @@
       align-items: center;
       border-radius: 8px;
       background: #fff;
-      min-width: 100px;
+      min-width: 110px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       position: relative;
     }
-    .node img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 6px; border: 1px solid #cbd5e1; }
-    .avatar-placeholder { width: 50px; height: 50px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 6px; }
-    .node-name { font-weight: bold; font-size: 15px; color: #0f172a; }
-    .node-id { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .node img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; margin-bottom: 6px; border: 1px solid #cbd5e1; }
+    .avatar-placeholder { width: 55px; height: 55px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 6px; }
+    .node-relation { font-size: 11px; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: #334155; font-weight: bold; margin-bottom: 4px; }
+    .node-name { font-weight: bold; font-size: 14px; color: #0f172a; }
+    .node-id { font-size: 11px; color: #64748b; margin-top: 2px; }
 
     @media print {
       .no-print { display: none !important; }
@@ -71,12 +72,19 @@
     <h3>নতুন সদস্য যোগ করুন</h3>
     <div class="form-group">
       <input id="name" type="text" placeholder="সদস্যের নাম (আবশ্যক)">
-      <input id="idno" type="text" placeholder="আইডি নম্বর (ঐচ্ছিক)">
-      <select id="parent">
-        <option value="">মূল অভিভাবক / দাদা (Root)</option>
+      <select id="relation">
+        <option value="দাদু">দাদু / মূল অভিভাবক</option>
+        <option value="পিতা">পিতা</option>
+        <option value="মাতা">মাতা</option>
+        <option value="পুত্র">পুত্র</option>
+        <option value="কন্যা">কন্যা</option>
       </select>
+      <input id="idno" type="text" placeholder="আইডি নম্বর (ঐচ্ছিক)">
     </div>
     <div class="form-group">
+      <select id="parent">
+        <option value="">কার অধীনে যুক্ত হবে? (অভিভাবক নির্বাচন করুন)</option>
+      </select>
       <input id="photo" type="file" accept="image/*">
       <button class="btn" onclick="addMember()">সদস্য যোগ করুন</button>
     </div>
@@ -103,11 +111,13 @@
 
   function addMember() {
     const nameInput = document.getElementById('name');
+    const relationInput = document.getElementById('relation');
     const idnoInput = document.getElementById('idno');
     const parentSelect = document.getElementById('parent');
     const photoInput = document.getElementById('photo');
 
     const name = nameInput.value.trim();
+    const relation = relationInput.value;
     const idno = idnoInput.value.trim();
     const parent = parentSelect.value;
     const file = photoInput.files[0];
@@ -121,6 +131,7 @@
       const newMember = {
         id: 'id_' + Date.now(),
         name: name,
+        relation: relation,
         idno: idno,
         parent: parent,
         img: imgData || ''
@@ -149,9 +160,9 @@
   function updateUI() {
     // ১. ড্রপডাউন আপডেট করা
     const parentSelect = document.getElementById('parent');
-    parentSelect.innerHTML = '<option value="">মূল অভিভাবক / দাদা (Root)</option>';
+    parentSelect.innerHTML = '<option value="">কার অধীনে যুক্ত হবে? (অভিভাবক নির্বাচন করুন)</option>';
     members.forEach(m => {
-      parentSelect.innerHTML += `<option value="${m.id}">${m.name}</option>`;
+      parentSelect.innerHTML += `<option value="${m.id}">${m.name} (${m.relation})</option>`;
     });
 
     // ২. বংশতালিকা রেন্ডার করা
@@ -159,7 +170,7 @@
     const treeDiv = document.getElementById('tree');
 
     if (roots.length === 0) {
-      treeDiv.innerHTML = '<p style="color:#94a3b8;">এখনো কোনো সদস্য যোগ করা হয়নি। উপরে তথ্য দিয়ে সদস্য যোগ করুন।</p>';
+      treeDiv.innerHTML = '<p style="color:#94a3b8;">এখনো কোনো সদস্য যোগ করা হয়নি। প্রথম সদস্য হিসেবে "দাদু" যোগ করুন।</p>';
       return;
     }
 
@@ -178,6 +189,7 @@
     let html = `<li>
       <div class="node">
         ${imageHTML}
+        <div class="node-relation">${person.relation}</div>
         <div class="node-name">${person.name}</div>
         ${idHTML}
       </div>`;

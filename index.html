@@ -38,7 +38,7 @@
     .tf-tree li:first-child::after { border-radius: 5px 0 0 0; }
     .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #475569; width: 0; height: 20px; }
     
-    /* Person Node Box */
+    /* Fixed Equal Size Person Node Box */
     .node {
       border: 2px solid #1e293b;
       padding: 10px;
@@ -47,20 +47,44 @@
       align-items: center;
       border-radius: 8px;
       background: #fff;
-      min-width: 140px;
+      width: 170px; /* নির্দিষ্ট চওড়া */
+      min-height: 240px; /* নির্দিষ্ট উচ্চতা */
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       position: relative;
+      word-break: break-word;
     }
     .node img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; margin-bottom: 6px; border: 1px solid #cbd5e1; }
     .avatar-placeholder { width: 55px; height: 55px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 6px; }
     .node-relation { font-size: 11px; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: #334155; font-weight: bold; margin-bottom: 4px; }
     .node-name { font-weight: bold; font-size: 14px; color: #0f172a; margin-bottom: 4px; }
-    .node-details { font-size: 11px; color: #475569; text-align: center; line-height: 1.3; }
+    .node-details { font-size: 11px; color: #475569; text-align: center; line-height: 1.3; width: 100%; }
+    .delete-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
+    /* Print Setup for A4 Page */
+    @page {
+      size: A4 landscape;
+      margin: 10mm;
+    }
     @media print {
       .no-print { display: none !important; }
       body { background: #fff; padding: 0; }
       .card { box-shadow: none; border: none; padding: 0; }
+      .tree-container { overflow: visible; }
     }
   </style>
 </head>
@@ -93,7 +117,8 @@
       </select>
     </div>
     <div class="form-group">
-      <input id="photo" type="file" accept="image/*">
+      <!-- গ্যালারি ও ডাইরেক্ট ক্যামেরা অপশন -->
+      <input id="photo" type="file" accept="image/*" capture="environment">
       <button class="btn" onclick="addMember()">সদস্য যোগ করুন</button>
     </div>
   </div>
@@ -111,7 +136,7 @@
     </div>
   </div>
 
-  <button class="btn btn-print no-print" onclick="window.print()">প্রিন্ট করুন</button>
+  <button class="btn btn-print no-print" onclick="window.print()">প্রিন্ট করুন (A4)</button>
 </div>
 
 <script>
@@ -181,6 +206,19 @@
     }
   }
 
+  function deleteMember(id) {
+    if (confirm('আপনি কি এই সদস্য এবং তাঁর সাথে যুক্ত সন্তানদের মুছে ফেলতে চান?')) {
+      // রিকারসিভভাবে সন্তান সহ ডিলিট করা
+      const removeRecursive = (targetId) => {
+        const children = members.filter(m => m.parent === targetId);
+        children.forEach(c => removeRecursive(c.id));
+        members = members.filter(m => m.id !== targetId);
+      };
+      removeRecursive(id);
+      updateUI();
+    }
+  }
+
   function updateUI() {
     // ১. ড্রপডাউন আপডেট করা
     const parentSelect = document.getElementById('parent');
@@ -216,10 +254,12 @@
     if (person.serialNo) partSerialArr.push(`Sl: ${person.serialNo}`);
     let partSerialHTML = partSerialArr.length > 0 ? `<div>${partSerialArr.join(', ')}</div>` : '';
 
+    // Aadhaar ও নম্বর পাশাপাশি একই লাইনে
     let aadharHTML = person.aadharNo ? `<div>Aadhaar: ${person.aadharNo}</div>` : '';
 
     let html = `<li>
       <div class="node">
+        <button class="delete-btn no-print" onclick="deleteMember('${person.id}')" title="ডিলিট করুন">✕</button>
         ${imageHTML}
         <div class="node-relation">${person.relation}</div>
         <div class="node-name">${person.name}</div>

@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Family Tree - Tentulia Gram Panchayat</title>
-  <!-- Modern Font Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Family Tree Generator - Tentulia Gram Panchayat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
     body { 
@@ -19,7 +18,6 @@
     
     .container { max-width: 1200px; margin: auto; }
     
-    /* Premium Card Design */
     .card { 
       background: #ffffff; 
       border-radius: 16px; 
@@ -39,7 +37,6 @@
       margin-bottom: 16px;
     }
     
-    /* Modern Form Inputs */
     .form-group { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
     .form-group input[type="text"], .form-group select, .form-group input[type="file"] { 
       flex: 1; 
@@ -75,7 +72,6 @@
       user-select: none;
     }
     
-    /* Buttons */
     .btn { 
       background: #059669; 
       color: white; 
@@ -97,26 +93,45 @@
     }
     .btn-print:hover { background: #1d4ed8; }
     
-    /* Document Header Header Styling */
-    .header-title { text-align: center; margin-bottom: 20px; }
-    .header-title h3 { margin: 2px 0; color: #64748b; font-size: 15px; font-weight: 600; border: none; padding: 0; }
-    .header-title h2 { 
-      margin: 8px 0; 
+    /* Prominent & Large Header Styling */
+    .header-title { 
+      text-align: center; 
+      margin-bottom: 25px; 
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .header-title h1 { 
+      margin: 0 0 6px 0; 
       color: #0f172a; 
-      border-bottom: 2px dashed #94a3b8; 
-      display: inline-block; 
-      padding-bottom: 4px; 
+      font-size: 28px; 
+      font-weight: 800; 
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .header-title h2 { 
+      margin: 0 0 12px 0; 
+      color: #334155; 
+      font-size: 18px; 
+      font-weight: 600; 
+    }
+    .header-title .title-badge { 
+      display: inline-block;
+      margin-top: 6px; 
+      color: #1e293b; 
+      border: 2px dashed #475569; 
+      padding: 6px 20px;
+      border-radius: 6px;
       font-size: 22px; 
-      letter-spacing: 1px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      background: #f1f5f9;
     }
 
-    /* Org-Chart Structure */
     .tree-container { width: 100%; overflow-x: auto; padding: 15px 0; text-align: center; }
     .tf-tree { display: inline-block; text-align: center; }
     .tf-tree ul { display: flex; padding-top: 18px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
     .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 18px 5px 0 5px; }
     
-    /* Connection Lines */
     .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #64748b; width: 50%; height: 18px; }
     .tf-tree li::after { right: auto; left: 50%; border-left: 2px solid #64748b; }
     .tf-tree li:only-child::after, .tf-tree li:only-child::before { display: none; }
@@ -126,7 +141,6 @@
     .tf-tree li:first-child::after { border-radius: 6px 0 0 0; }
     .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #64748b; width: 0; height: 18px; }
     
-    /* Card/Node Box Styling */
     .node {
       border: 1.5px solid #cbd5e1;
       padding: 12px 10px;
@@ -143,7 +157,6 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    /* Green Highlight Signal Box */
     .node.signal-box {
       border: 2px solid #16a34a !important;
       background: #f0fdf4 !important;
@@ -154,7 +167,6 @@
       color: #15803d !important;
     }
 
-    /* Profile Presentation */
     .node img { 
       width: 58px; 
       height: 58px; 
@@ -212,7 +224,6 @@
     }
     .delete-btn:hover { opacity: 1; }
 
-    /* Applicant Remarks Section */
     .declaration-section {
       margin-top: 35px;
       padding: 16px;
@@ -245,7 +256,6 @@
       line-height: 1.5;
     }
 
-    /* Modern Signature Lines */
     .signature-container {
       margin-top: 50px;
       display: flex;
@@ -265,7 +275,6 @@
       color: #1e293b;
     }
 
-    /* Print Setup for A4 Landscape */
     @page {
       size: A4 landscape;
       margin: 6mm;
@@ -275,6 +284,7 @@
       body { background: #fff; padding: 0; margin: 0; }
       .container { max-width: 100%; width: 100%; margin: 0; }
       .card { box-shadow: none; border: none; padding: 0; margin: 0; }
+      .header-title .title-badge { background: transparent; }
       .tree-container { overflow: visible; zoom: 85%; }
       .declaration-section { background: transparent; border: 1px dashed #64748b; }
       .comment-textarea { 
@@ -291,7 +301,6 @@
 <body>
 
 <div class="container">
-  <!-- Input Panel -->
   <div class="card no-print">
     <h3>Add New Member</h3>
     <div class="form-group">
@@ -326,34 +335,29 @@
     </div>
   </div>
 
-  <!-- Printable Family Tree -->
   <div class="card">
+    <!-- Big Bold Header -->
     <div class="header-title">
-      <h3>Tentulia Gram Panchayat</h3>
-      <h3>Tentulia, Murshidabad</h3>
-      <h2>-: FAMILY TREE :-</h2>
+      <h1>Tentulia Gram Panchayat</h1>
+      <h2>Tentulia, Murshidabad, PIN No: 742302</h2>
+      <div class="title-badge">-: FAMILY TREE :-</div>
     </div>
 
-    <!-- Tree Container -->
     <div class="tree-container">
       <div id="tree" class="tf-tree"></div>
     </div>
 
-    <!-- Applicant Remarks & Signatures -->
     <div class="declaration-section">
       <div class="declaration-title">Applicant Remark / Declaration:</div>
       <textarea class="comment-textarea" placeholder="Write your remark or declaration here...">I hereby declare that all the information provided in the family tree above is true and correct to the best of my knowledge. If any information is proven false or incorrect in the future, I shall be held responsible.</textarea>
       
       <div class="signature-container">
-        <!-- 1. Panchayet Prodhan Signature -->
         <div class="sig-box">
           <div class="sig-line">Panchayet Prodhan Signature</div>
         </div>
-        <!-- 2. Member Signature -->
         <div class="sig-box">
           <div class="sig-line">Member Signature</div>
         </div>
-        <!-- 3. Applicant Signature -->
         <div class="sig-box">
           <div class="sig-line">Applicant Signature</div>
         </div>
@@ -414,7 +418,6 @@
       };
       members.push(newMember);
 
-      // Reset Inputs
       nameInput.value = '';
       aadharNoInput.value = '';
       voterIdInput.value = '';

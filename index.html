@@ -28,7 +28,7 @@
       text-align: left; 
       display: flex;
       flex-direction: column;
-      min-height: 850px; /* Ensures space to push declaration down */
+      min-height: 850px; 
     }
 
     .card h3 { 
@@ -97,7 +97,7 @@
     }
     .btn-print:hover { background: #1d4ed8; }
     
-    /* Premium Header Design with Equal Font Sizing */
+    /* Header & Address Label Bolding */
     .header-title { 
       text-align: center; 
       margin-bottom: 25px; 
@@ -113,12 +113,19 @@
       letter-spacing: 2px;
     }
     .header-details-line {
-      color: #1e293b;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      margin: 5px 0;
+      color: #334155;
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin: 6px 0;
       line-height: 1.6;
+    }
+
+    /* Target highlighted bold labels */
+    .header-details-line .label {
+      font-weight: 900;
+      color: #000000;
+      letter-spacing: 0.8px;
     }
 
     .tree-container { 
@@ -126,7 +133,7 @@
       overflow-x: auto; 
       padding: 15px 0; 
       text-align: center; 
-      flex-grow: 1; /* Allows tree area to fill remaining space */
+      flex-grow: 1; 
     }
     .tf-tree { display: inline-block; text-align: center; }
     .tf-tree ul { display: flex; padding-top: 18px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
@@ -224,9 +231,8 @@
     }
     .delete-btn:hover { opacity: 1; }
 
-    /* Sticky Declaration Section at Bottom */
     .declaration-section {
-      margin-top: auto; /* Pushes to bottom of container */
+      margin-top: auto; 
       padding: 16px 20px;
       border: 1.5px dashed #64748b;
       border-radius: 12px;
@@ -290,7 +296,7 @@
         border: none; 
         padding: 0; 
         margin: 0; 
-        height: 98vh; /* Forces card to fit full page */
+        height: 98vh; 
         justify-content: space-between; 
       }
       .tree-container { overflow: visible; zoom: 85%; }
@@ -344,18 +350,26 @@
   </div>
 
   <div class="card">
-    <!-- Styled Uniform Header -->
+    <!-- Header with Highlighted Bold Labels -->
     <div class="header-title">
       <h1>FAMILY TREE</h1>
-      <div class="header-details-line">GRAM PANCHAYAT: TENTULIA GRAM PANCHAYAT</div>
-      <div class="header-details-line">BLOCK: MURSHIDABAD-JIAGANJ, VILLAGE: TENTULIA, POST OFFICE: TENTULIA, POLICE STATION: MURSHIDABAD, DISTRICT: MURSHIDABAD, PIN: 742302</div>
+      <div class="header-details-line">
+        <span class="label">GRAM PANCHAYAT:</span> TENTULIA GRAM PANCHAYAT
+      </div>
+      <div class="header-details-line">
+        <span class="label">BLOCK:</span> MURSHIDABAD-JIAGANJ, 
+        <span class="label">VILLAGE:</span> TENTULIA, 
+        <span class="label">POST OFFICE:</span> TENTULIA, 
+        <span class="label">POLICE STATION:</span> MURSHIDABAD, 
+        <span class="label">DISTRICT:</span> MURSHIDABAD, 
+        <span class="label">PIN:</span> 742302
+      </div>
     </div>
 
     <div class="tree-container">
       <div id="tree" class="tf-tree"></div>
     </div>
 
-    <!-- Declaration Box Fixed to Bottom -->
     <div class="declaration-section">
       <div class="declaration-title">Applicant Remark / Declaration:</div>
       <textarea class="comment-textarea" placeholder="Write your remark or declaration here...">I hereby declare that all the information provided in the family tree above is true and correct to the best of my knowledge. If any information is proven false or incorrect in the future, I shall be held responsible.</textarea>
@@ -528,5 +542,5 @@
 </script>
 
 </body>
-      </html>
+        </html>
         

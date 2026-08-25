@@ -1,153 +1,253 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>বংশতালিকা - Tentulia Gram Panchayat</title>
+  <title>Family Tree - Tentulia Gram Panchayat</title>
+  <!-- Modern Font Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 16px; text-align: center; }
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: #f8fafc; 
+      color: #0f172a;
+      margin: 0; 
+      padding: 24px 16px; 
+      text-align: center; 
+    }
     
     .container { max-width: 1200px; margin: auto; }
-    .card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); text-align: left; }
-    .card h3 { margin-top: 0; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
     
-    .form-group { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; align-items: center; }
-    .form-group input[type="text"], .form-group select { flex: 1; min-width: 160px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
-    .checkbox-label { display: flex; align-items: center; gap: 6px; font-weight: bold; font-size: 14px; color: #15803d; background: #dcfce7; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+    /* Premium Card Design */
+    .card { 
+      background: #ffffff; 
+      border-radius: 16px; 
+      padding: 24px; 
+      margin-bottom: 24px; 
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); 
+      border: 1px solid #e2e8f0;
+      text-align: left; 
+    }
+    .card h3 { 
+      margin-top: 0; 
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b; 
+      border-bottom: 2px solid #f1f5f9; 
+      padding-bottom: 12px; 
+      margin-bottom: 16px;
+    }
     
-    .btn { background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
-    .btn:hover { background: #047857; }
-    .btn-print { background: #2563eb; margin-top: 15px; }
+    /* Modern Form Inputs */
+    .form-group { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+    .form-group input[type="text"], .form-group select, .form-group input[type="file"] { 
+      flex: 1; 
+      min-width: 180px; 
+      padding: 11px 14px; 
+      border: 1px solid #cbd5e1; 
+      border-radius: 8px; 
+      font-size: 13.5px; 
+      font-family: inherit;
+      background-color: #f8fafc;
+      transition: all 0.2s ease;
+      color: #334155;
+    }
+    .form-group input[type="text"]:focus, .form-group select:focus {
+      outline: none;
+      border-color: #2563eb;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .checkbox-label { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      font-weight: 600; 
+      font-size: 13px; 
+      color: #15803d; 
+      background: #f0fdf4; 
+      border: 1px solid #bbf7d0;
+      padding: 10px 14px; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      user-select: none;
+    }
     
-    .header-title { text-align: center; margin-bottom: 15px; }
-    .header-title h3 { margin: 2px 0; color: #475569; font-size: 16px; }
-    .header-title h2 { margin: 6px 0; color: #0f172a; border-bottom: 2px dashed #0f172a; display: inline-block; padding-bottom: 4px; font-size: 20px; }
+    /* Buttons */
+    .btn { 
+      background: #059669; 
+      color: white; 
+      border: none; 
+      padding: 11px 22px; 
+      border-radius: 8px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      font-size: 14px; 
+      font-family: inherit;
+      box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2);
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #047857; transform: translateY(-1px); }
+    .btn-print { 
+      background: #2563eb; 
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+      padding: 12px 28px;
+    }
+    .btn-print:hover { background: #1d4ed8; }
+    
+    /* Document Header Header Styling */
+    .header-title { text-align: center; margin-bottom: 20px; }
+    .header-title h3 { margin: 2px 0; color: #64748b; font-size: 15px; font-weight: 600; border: none; padding: 0; }
+    .header-title h2 { 
+      margin: 8px 0; 
+      color: #0f172a; 
+      border-bottom: 2px dashed #94a3b8; 
+      display: inline-block; 
+      padding-bottom: 4px; 
+      font-size: 22px; 
+      letter-spacing: 1px;
+    }
 
     /* Org-Chart Structure */
-    .tree-container { width: 100%; overflow-x: auto; padding: 10px 0; text-align: center; }
+    .tree-container { width: 100%; overflow-x: auto; padding: 15px 0; text-align: center; }
     .tf-tree { display: inline-block; text-align: center; }
-    .tf-tree ul { display: flex; padding-top: 15px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
-    .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 15px 4px 0 4px; }
+    .tf-tree ul { display: flex; padding-top: 18px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
+    .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 18px 5px 0 5px; }
     
     /* Connection Lines */
-    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #475569; width: 50%; height: 15px; }
-    .tf-tree li::after { right: auto; left: 50%; border-left: 2px solid #475569; }
+    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #64748b; width: 50%; height: 18px; }
+    .tf-tree li::after { right: auto; left: 50%; border-left: 2px solid #64748b; }
     .tf-tree li:only-child::after, .tf-tree li:only-child::before { display: none; }
     .tf-tree li:only-child { padding-top: 0; }
     .tf-tree li:first-child::before, .tf-tree li:last-child::after { border: none; }
-    .tf-tree li:last-child::before { border-right: 2px solid #475569; border-radius: 0 5px 0 0; }
-    .tf-tree li:first-child::after { border-radius: 5px 0 0 0; }
-    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #475569; width: 0; height: 15px; }
+    .tf-tree li:last-child::before { border-right: 2px solid #64748b; border-radius: 0 6px 0 0; }
+    .tf-tree li:first-child::after { border-radius: 6px 0 0 0; }
+    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #64748b; width: 0; height: 18px; }
     
-    /* Base Node Box Styling */
+    /* Card/Node Box Styling */
     .node {
-      border: 2px solid #475569;
-      padding: 10px 8px;
+      border: 1.5px solid #cbd5e1;
+      padding: 12px 10px;
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      border-radius: 8px;
+      border-radius: 12px;
       background: #ffffff;
-      width: 155px;
+      width: 165px;
       height: fit-content;
-      min-height: auto;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
       position: relative;
       word-break: break-word;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    /* গ্রিন সিগন্যাল লিংকেজ বক্স */
+    /* Green Highlight Signal Box */
     .node.signal-box {
-      border: 2.5px solid #15803d !important;
+      border: 2px solid #16a34a !important;
       background: #f0fdf4 !important;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
     }
     .node.signal-box .node-relation {
-      background: #bbf7d0 !important;
-      color: #166534 !important;
+      background: #dcfce7 !important;
+      color: #15803d !important;
     }
 
-    /* ছবি ও প্রোফাইল প্রেজেন্টেশন */
+    /* Profile Presentation */
     .node img { 
-      width: 55px; 
-      height: 55px; 
+      width: 58px; 
+      height: 58px; 
       border-radius: 50%; 
       object-fit: cover; 
-      margin-bottom: 4px; 
-      border: 2px solid #94a3b8; 
+      margin-bottom: 6px; 
+      border: 2px solid #e2e8f0; 
       background: #fff;
     }
     .avatar-placeholder { 
-      width: 55px; 
-      height: 55px; 
+      width: 58px; 
+      height: 58px; 
       border-radius: 50%; 
-      background: #e2e8f0; 
+      background: #f1f5f9; 
+      color: #64748b;
       display: flex; 
       align-items: center; 
       justify-content: center; 
-      font-size: 24px; 
-      margin-bottom: 4px; 
+      font-size: 26px; 
+      margin-bottom: 6px; 
       border: 1px solid #cbd5e1;
     }
 
-    .node-relation { font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 4px; background: #e2e8f0; color: #334155; }
-    .node-name { font-weight: bold; font-size: 14px; color: #0f172a; margin-bottom: 4px; }
-    .node-details { font-size: 10.5px; color: #334155; text-align: center; line-height: 1.4; width: 100%; }
+    .node-relation { 
+      font-size: 11px; 
+      padding: 3px 10px; 
+      border-radius: 12px; 
+      font-weight: 700; 
+      margin-bottom: 6px; 
+      background: #f1f5f9; 
+      color: #475569; 
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .node-name { font-weight: 700; font-size: 14px; color: #0f172a; margin-bottom: 6px; line-height: 1.2; }
+    .node-details { font-size: 11px; color: #475569; text-align: center; line-height: 1.45; width: 100%; }
     
     .delete-btn {
       position: absolute;
-      top: 4px;
-      right: 4px;
+      top: 6px;
+      right: 6px;
       background: #ef4444;
       color: white;
       border: none;
       border-radius: 50%;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       font-size: 11px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
+      opacity: 0.8;
+      transition: opacity 0.2s;
     }
+    .delete-btn:hover { opacity: 1; }
 
-    /* আবেদনকারীর মন্তব্য ও স্বাক্ষর সেকশন */
+    /* Applicant Remarks Section */
     .declaration-section {
       margin-top: 35px;
-      padding: 12px;
-      border: 1.5px dashed #64748b;
-      border-radius: 8px;
+      padding: 16px;
+      border: 1.5px dashed #94a3b8;
+      border-radius: 12px;
       text-align: left;
-      font-size: 12px;
-      color: #1e293b;
-      background: #fafafa;
+      font-size: 12.5px;
+      color: #334155;
+      background: #f8fafc;
     }
     .declaration-title {
-      font-weight: bold;
-      font-size: 13px;
-      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 13.5px;
+      margin-bottom: 8px;
       color: #0f172a;
       text-decoration: underline;
     }
 
-    /* এডিটেবল মন্তব্য বক্স */
     .comment-textarea {
       width: 100%;
-      min-height: 50px;
+      min-height: 55px;
       border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      padding: 8px;
-      font-size: 12px;
-      font-family: Arial, sans-serif;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 12.5px;
+      font-family: inherit;
       resize: vertical;
       color: #1e293b;
       background: #ffffff;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
-    /* ৩টি স্বাক্ষর লাইন (নতুন ক্রম অনুযায়ী) */
+    /* Modern Signature Lines */
     .signature-container {
-      margin-top: 45px;
+      margin-top: 50px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -157,14 +257,15 @@
       text-align: center;
     }
     .sig-line {
-      border-top: 1px dashed #475569;
-      width: 170px;
-      padding-top: 4px;
+      border-top: 1.5px dashed #475569;
+      width: 180px;
+      padding-top: 6px;
       font-size: 12px;
-      font-weight: bold;
+      font-weight: 600;
+      color: #1e293b;
     }
 
-    /* Print Setup for Single A4 Landscape Page */
+    /* Print Setup for A4 Landscape */
     @page {
       size: A4 landscape;
       margin: 6mm;
@@ -175,7 +276,7 @@
       .container { max-width: 100%; width: 100%; margin: 0; }
       .card { box-shadow: none; border: none; padding: 0; margin: 0; }
       .tree-container { overflow: visible; zoom: 85%; }
-      .declaration-section { background: transparent; border: 1px dashed #000; }
+      .declaration-section { background: transparent; border: 1px dashed #64748b; }
       .comment-textarea { 
         border: none; 
         padding: 0; 
@@ -190,77 +291,77 @@
 <body>
 
 <div class="container">
-  <!-- ইনপুট প্যানেল -->
+  <!-- Input Panel -->
   <div class="card no-print">
-    <h3>নতুন সদস্য যোগ করুন</h3>
+    <h3>Add New Member</h3>
     <div class="form-group">
-      <input id="name" type="text" placeholder="সদস্যের নাম (আবশ্যক)">
+      <input id="name" type="text" placeholder="Member Name (Required)">
       <select id="relation">
-        <option value="দাদু">দাদু / মূল অভিভাবক</option>
-        <option value="পিতা">পিতা</option>
-        <option value="মাতা">মাতা</option>
-        <option value="পুত্র">পুত্র</option>
-        <option value="কন্যা">কন্যা</option>
+        <option value="Grandfather">Grandfather / Primary Guardian</option>
+        <option value="Father">Father</option>
+        <option value="Mother">Mother</option>
+        <option value="Son">Son</option>
+        <option value="Daughter">Daughter</option>
       </select>
-      <input id="aadharNo" type="text" placeholder="আধার নম্বর">
+      <input id="aadharNo" type="text" placeholder="Aadhaar Number">
     </div>
     <div class="form-group">
-      <input id="voterId" type="text" placeholder="ভোটার আইডি">
-      <input id="assembly" type="text" placeholder="বিধানসভার নাম">
-      <input id="partNo" type="text" placeholder="পার্ট নম্বর">
+      <input id="voterId" type="text" placeholder="Voter ID">
+      <input id="assembly" type="text" placeholder="Assembly Name">
+      <input id="partNo" type="text" placeholder="Part No.">
     </div>
     <div class="form-group">
-      <input id="serialNo" type="text" placeholder="সিরিয়াল নম্বর">
-      <input id="voterYear" type="text" placeholder="ভোটার লিস্টের বছর (যেমন: 2024 / 2026)">
+      <input id="serialNo" type="text" placeholder="Serial No.">
+      <input id="voterYear" type="text" placeholder="Voter List Year (e.g., 2024 / 2026)">
       <select id="parent">
-        <option value="">কার অধীনে যুক্ত হবে? (অভিভাবক নির্বাচন করুন)</option>
+        <option value="">Under whom will it be added? (Select Guardian)</option>
       </select>
     </div>
     <div class="form-group">
       <input id="photo" type="file" accept="image/*">
       <label class="checkbox-label">
-        <input id="isSignal" type="checkbox"> 🟢 সিগন্যাল বক্স (মূল লিংক চিহ্নিত করুন)
+        <input id="isSignal" type="checkbox"> 🟢 Signal Box (Highlight Main Link)
       </label>
-      <button class="btn" onclick="addMember()">সদস্য যোগ করুন</button>
+      <button class="btn" onclick="addMember()">Add Member</button>
     </div>
   </div>
 
-  <!-- প্রিন্টযোগ্য বংশতালিকা -->
+  <!-- Printable Family Tree -->
   <div class="card">
     <div class="header-title">
       <h3>Tentulia Gram Panchayat</h3>
       <h3>Tentulia, Murshidabad</h3>
-      <h2>-: বংশতালিকা :-</h2>
+      <h2>-: FAMILY TREE :-</h2>
     </div>
 
-    <!-- ট্রি কন্টেইনার -->
+    <!-- Tree Container -->
     <div class="tree-container">
       <div id="tree" class="tf-tree"></div>
     </div>
 
-    <!-- আবেদনকারীর মন্তব্য ও ৩টি স্বাক্ষর সেকশন -->
+    <!-- Applicant Remarks & Signatures -->
     <div class="declaration-section">
-      <div class="declaration-title">আবেদনকারীর মন্তব্য / ঘোষণা:</div>
-      <textarea class="comment-textarea" placeholder="এখানে আপনার মন্তব্য বা ঘোষণা লিখুন...">আমি এতদ্বারা ঘোষণা করছি যে, উপরে প্রদত্ত বংশতালিকার যাবতীয় তথ্য সম্পূর্ণ সত্য ও নির্ভুল। ভবিষ্যতে কোনো তথ্য ভুল বা মিথ্যা প্রমাণিত হলে আমি তার জন্য দায়ী থাকিব।</textarea>
+      <div class="declaration-title">Applicant Remark / Declaration:</div>
+      <textarea class="comment-textarea" placeholder="Write your remark or declaration here...">I hereby declare that all the information provided in the family tree above is true and correct to the best of my knowledge. If any information is proven false or incorrect in the future, I shall be held responsible.</textarea>
       
       <div class="signature-container">
-        <!-- ১. পঞ্চায়েত প্রধান স্বাক্ষর -->
+        <!-- 1. Panchayet Prodhan Signature -->
         <div class="sig-box">
-          <div class="sig-line">পঞ্চায়েত প্রধান স্বাক্ষর</div>
+          <div class="sig-line">Panchayet Prodhan Signature</div>
         </div>
-        <!-- ২. মেম্বার স্বাক্ষর -->
+        <!-- 2. Member Signature -->
         <div class="sig-box">
-          <div class="sig-line">মেম্বার স্বাক্ষর</div>
+          <div class="sig-line">Member Signature</div>
         </div>
-        <!-- ৩. আবেদনকারীর স্বাক্ষর -->
+        <!-- 3. Applicant Signature -->
         <div class="sig-box">
-          <div class="sig-line">আবেদনকারীর স্বাক্ষর</div>
+          <div class="sig-line">Applicant Signature</div>
         </div>
       </div>
     </div>
   </div>
 
-  <button class="btn btn-print no-print" onclick="window.print()">প্রিন্ট করুন (A4)</button>
+  <button class="btn btn-print no-print" onclick="window.print()">Print Document (A4)</button>
 </div>
 
 <script>
@@ -292,7 +393,7 @@
     const file = photoInput.files[0];
 
     if (!name) {
-      alert('দয়া করে সদস্যের নাম লিখুন!');
+      alert('Please enter the member\'s name!');
       return;
     }
 
@@ -313,7 +414,7 @@
       };
       members.push(newMember);
 
-      // রিসেট ইনপুট
+      // Reset Inputs
       nameInput.value = '';
       aadharNoInput.value = '';
       voterIdInput.value = '';
@@ -339,7 +440,7 @@
   }
 
   function deleteMember(id) {
-    if (confirm('আপনি কি এই সদস্য এবং তাঁর সকল সন্তানদের মুছে ফেলতে চান?')) {
+    if (confirm('Are you sure you want to delete this member and all their children?')) {
       const removeRecursive = (targetId) => {
         const children = members.filter(m => m.parent === targetId);
         children.forEach(c => removeRecursive(c.id));
@@ -352,7 +453,7 @@
 
   function updateUI() {
     const parentSelect = document.getElementById('parent');
-    parentSelect.innerHTML = '<option value="">কার অধীনে যুক্ত হবে? (অভিভাবক নির্বাচন করুন)</option>';
+    parentSelect.innerHTML = '<option value="">Under whom will it be added? (Select Guardian)</option>';
     members.forEach(m => {
       parentSelect.innerHTML += `<option value="${m.id}">${m.name} (${m.relation})</option>`;
     });
@@ -361,7 +462,7 @@
     const treeDiv = document.getElementById('tree');
 
     if (roots.length === 0) {
-      treeDiv.innerHTML = '<p style="color:#94a3b8;">এখনো কোনো সদস্য যোগ করা হয়নি। প্রথম সদস্য হিসেবে "দাদু" যোগ করুন।</p>';
+      treeDiv.innerHTML = '<p style="color:#94a3b8; font-size:14px;">No members added yet. Add "Grandfather" as the first member.</p>';
       return;
     }
 
@@ -390,7 +491,7 @@
 
     let html = `<li>
       <div class="node ${signalClass}">
-        <button class="delete-btn no-print" onclick="deleteMember('${person.id}')" title="ডিলিট করুন">✕</button>
+        <button class="delete-btn no-print" onclick="deleteMember('${person.id}')" title="Delete">✕</button>
         ${imageHTML}
         <div class="node-relation">${person.relation}</div>
         <div class="node-name">${person.name}</div>
@@ -415,5 +516,5 @@
 </script>
 
 </body>
-  </html>
-  
+        </html>
+        

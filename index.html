@@ -48,7 +48,7 @@
       border-radius: 8px;
       background: #fff;
       width: 150px;
-      min-height: 220px;
+      min-height: 230px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.08);
       position: relative;
       word-break: break-word;
@@ -57,7 +57,7 @@
     .avatar-placeholder { width: 50px; height: 50px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 4px; }
     .node-relation { font-size: 10px; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: #334155; font-weight: bold; margin-bottom: 4px; }
     .node-name { font-weight: bold; font-size: 13px; color: #0f172a; margin-bottom: 4px; }
-    .node-details { font-size: 10px; color: #475569; text-align: center; line-height: 1.3; width: 100%; }
+    .node-details { font-size: 10px; color: #475569; text-align: center; line-height: 1.35; width: 100%; }
     .delete-btn {
       position: absolute;
       top: 4px;
@@ -85,7 +85,7 @@
       body { background: #fff; padding: 0; margin: 0; }
       .container { max-width: 100%; width: 100%; margin: 0; }
       .card { box-shadow: none; border: none; padding: 0; margin: 0; }
-      .tree-container { overflow: visible; zoom: 85%; } /* এক পেজে ফিট রাখার জন্য জুম অ্যাডজাস্টমেন্ট */
+      .tree-container { overflow: visible; zoom: 85%; }
     }
   </style>
 </head>
@@ -104,21 +104,21 @@
         <option value="পুত্র">পুত্র</option>
         <option value="কন্যা">কন্যা</option>
       </select>
-      <input id="voterId" type="text" placeholder="ভোটার আইডি">
+      <input id="aadharNo" type="text" placeholder="আধার নম্বর">
     </div>
     <div class="form-group">
+      <input id="voterId" type="text" placeholder="ভোটার আইডি">
       <input id="assembly" type="text" placeholder="বিধানসভার নাম">
       <input id="partNo" type="text" placeholder="পার্ট নম্বর">
-      <input id="serialNo" type="text" placeholder="সিরিয়াল নম্বর">
     </div>
     <div class="form-group">
-      <input id="aadharNo" type="text" placeholder="আধার নম্বর">
+      <input id="serialNo" type="text" placeholder="সিরিয়াল নম্বর">
+      <input id="voterYear" type="text" placeholder="ভোটার লিস্টের বছর (যেমন: 2024 / 2026)">
       <select id="parent">
         <option value="">কার অধীনে যুক্ত হবে? (অভিভাবক নির্বাচন করুন)</option>
       </select>
     </div>
     <div class="form-group">
-      <!-- capture বাদ দেওয়া হয়েছে যাতে ক্যামেরা ও গ্যালারি দুটোই অপশনে আসে -->
       <input id="photo" type="file" accept="image/*">
       <button class="btn" onclick="addMember()">সদস্য যোগ করুন</button>
     </div>
@@ -137,7 +137,7 @@
     </div>
   </div>
 
-  <button class="btn btn-print no-print" onclick="window.print()">প্রিন্ট করুন (A4 - ১ পেজ)</button>
+  <button class="btn btn-print no-print" onclick="window.print()">প্রিন্ট করুন (A4)</button>
 </div>
 
 <script>
@@ -146,21 +146,23 @@
   function addMember() {
     const nameInput = document.getElementById('name');
     const relationInput = document.getElementById('relation');
+    const aadharNoInput = document.getElementById('aadharNo');
     const voterIdInput = document.getElementById('voterId');
     const assemblyInput = document.getElementById('assembly');
     const partNoInput = document.getElementById('partNo');
     const serialNoInput = document.getElementById('serialNo');
-    const aadharNoInput = document.getElementById('aadharNo');
+    const voterYearInput = document.getElementById('voterYear');
     const parentSelect = document.getElementById('parent');
     const photoInput = document.getElementById('photo');
 
     const name = nameInput.value.trim();
     const relation = relationInput.value;
+    const aadharNo = aadharNoInput.value.trim();
     const voterId = voterIdInput.value.trim();
     const assembly = assemblyInput.value.trim();
     const partNo = partNoInput.value.trim();
     const serialNo = serialNoInput.value.trim();
-    const aadharNo = aadharNoInput.value.trim();
+    const voterYear = voterYearInput.value.trim();
     const parent = parentSelect.value;
     const file = photoInput.files[0];
 
@@ -174,11 +176,12 @@
         id: 'id_' + Date.now(),
         name,
         relation,
+        aadharNo,
         voterId,
         assembly,
         partNo,
         serialNo,
-        aadharNo,
+        voterYear,
         parent,
         img: imgData || ''
       };
@@ -186,11 +189,12 @@
 
       // রিসেট ইনপুট
       nameInput.value = '';
+      aadharNoInput.value = '';
       voterIdInput.value = '';
       assemblyInput.value = '';
       partNoInput.value = '';
       serialNoInput.value = '';
-      aadharNoInput.value = '';
+      voterYearInput.value = '';
       photoInput.value = '';
 
       updateUI();
@@ -246,6 +250,10 @@
       ? `<img src="${person.img}" alt="${person.name}">` 
       : `<div class="avatar-placeholder">👤</div>`;
 
+    // আধার সবার উপরে
+    let aadharHTML = person.aadharNo ? `<div>Aadhaar: ${person.aadharNo}</div>` : '';
+    
+    // ভোটার ডিটেলস নিচে
     let voterHTML = person.voterId ? `<div>Voter: ${person.voterId}</div>` : '';
     let assemblyHTML = person.assembly ? `<div>${person.assembly}</div>` : '';
     
@@ -254,7 +262,8 @@
     if (person.serialNo) partSerialArr.push(`Sl: ${person.serialNo}`);
     let partSerialHTML = partSerialArr.length > 0 ? `<div>${partSerialArr.join(', ')}</div>` : '';
 
-    let aadharHTML = person.aadharNo ? `<div>Aadhaar: ${person.aadharNo}</div>` : '';
+    // ভোটার লিস্টের বছর একদম নিচে
+    let yearHTML = person.voterYear ? `<div>Voter List Year: ${person.voterYear}</div>` : '';
 
     let html = `<li>
       <div class="node">
@@ -263,10 +272,11 @@
         <div class="node-relation">${person.relation}</div>
         <div class="node-name">${person.name}</div>
         <div class="node-details">
+          ${aadharHTML}
           ${voterHTML}
           ${assemblyHTML}
           ${partSerialHTML}
-          ${aadharHTML}
+          ${yearHTML}
         </div>
       </div>`;
 
@@ -283,5 +293,5 @@
 </script>
 
 </body>
-        </html>
+  </html>
   

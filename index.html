@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Family Tree Generator - Tentulia</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <!-- AI Background Removal Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/index.js"></script>
   <style>
     * { box-sizing: border-box; }
     body { 
@@ -174,21 +172,19 @@
       color: #15803d !important;
     }
 
-    /* Fixed Image Framing & Background */
+    /* Perfect Image Display (Original Background & No Head Clipping) */
     .node img { 
-      width: 62px; 
-      height: 62px; 
+      width: 65px; 
+      height: 65px; 
       border-radius: 50%; 
-      object-fit: contain; 
-      object-position: center top; 
+      object-fit: cover; 
+      object-position: center 15%; 
       margin-bottom: 6px; 
-      border: 2px solid #e2e8f0; 
-      background: #ffffff; 
-      padding: 2px;
+      border: 2px solid #cbd5e1;
     }
     .avatar-placeholder { 
-      width: 62px; 
-      height: 62px; 
+      width: 65px; 
+      height: 65px; 
       border-radius: 50%; 
       background: #f1f5f9; 
       color: #64748b;
@@ -213,7 +209,6 @@
     }
     .node-name { font-weight: 800; font-size: 14px; color: #0f172a; margin-bottom: 6px; line-height: 1.2; }
     
-    /* Highlighted Details Text with Bold Values */
     .node-details { font-size: 11.5px; color: #475569; text-align: center; line-height: 1.5; width: 100%; }
     .node-details .val { font-weight: 700; color: #0f172a; }
 
@@ -399,28 +394,7 @@
 <script>
   let members = [];
 
-  async function processImageToWhiteBg(file) {
-    try {
-      if (typeof imglyRemoveBackground !== 'undefined') {
-        const blob = await imglyRemoveBackground(file);
-        return new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.readAsDataURL(blob);
-        });
-      }
-    } catch (e) {
-      console.warn('Background removal failed, fallback to original image:', e);
-    }
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.readAsDataURL(file);
-    });
-  }
-
-  async function addMember() {
-    const addBtn = document.getElementById('addBtn');
+  function addMember() {
     const nameInput = document.getElementById('name');
     const relationInput = document.getElementById('relation');
     const aadharNoInput = document.getElementById('aadharNo');
@@ -450,44 +424,45 @@
       return;
     }
 
-    addBtn.disabled = true;
-    addBtn.innerText = 'Processing...';
+    const saveAndRefresh = (imgData) => {
+      const newMember = {
+        id: 'id_' + Date.now(),
+        name,
+        relation,
+        aadharNo,
+        voterId,
+        assembly,
+        partNo,
+        serialNo,
+        voterYear,
+        parent,
+        isSignal,
+        img: imgData || ''
+      };
+      members.push(newMember);
 
-    let imgData = '';
-    if (file) {
-      imgData = await processImageToWhiteBg(file);
-    }
+      nameInput.value = '';
+      aadharNoInput.value = '';
+      voterIdInput.value = '';
+      assemblyInput.value = '';
+      partNoInput.value = '';
+      serialNoInput.value = '';
+      voterYearInput.value = '';
+      photoInput.value = '';
+      isSignalInput.checked = false;
 
-    const newMember = {
-      id: 'id_' + Date.now(),
-      name,
-      relation,
-      aadharNo,
-      voterId,
-      assembly,
-      partNo,
-      serialNo,
-      voterYear,
-      parent,
-      isSignal,
-      img: imgData
+      updateUI();
     };
-    members.push(newMember);
 
-    nameInput.value = '';
-    aadharNoInput.value = '';
-    voterIdInput.value = '';
-    assemblyInput.value = '';
-    partNoInput.value = '';
-    serialNoInput.value = '';
-    voterYearInput.value = '';
-    photoInput.value = '';
-    isSignalInput.checked = false;
-
-    addBtn.disabled = false;
-    addBtn.innerText = 'Add Member';
-
-    updateUI();
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        saveAndRefresh(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      saveAndRefresh('');
+    }
   }
 
   function deleteMember(id) {
@@ -527,7 +502,6 @@
       ? `<img src="${person.img}" alt="${person.name}">` 
       : `<div class="avatar-placeholder">👤</div>`;
 
-    /* Format Values with Bold Style */
     let aadharHTML = person.aadharNo ? `<div>Aadhaar: <span class="val">${person.aadharNo}</span></div>` : '';
     let voterHTML = person.voterId ? `<div>Voter: <span class="val">${person.voterId}</span></div>` : '';
     let assemblyHTML = person.assembly ? `<div><span class="val">${person.assembly}</span></div>` : '';
@@ -568,5 +542,5 @@
 </script>
 
 </body>
-        </html>
+  </html>
         

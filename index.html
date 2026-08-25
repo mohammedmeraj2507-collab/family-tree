@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Family Tree Generator - Tentulia Gram Panchayat</title>
+  <title>Family Tree Generator - Tentulia</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
@@ -93,7 +93,7 @@
     }
     .btn-print:hover { background: #1d4ed8; }
     
-    /* Updated Large Header Styling */
+    /* Header Styling */
     .header-title { 
       text-align: center; 
       margin-bottom: 25px; 
@@ -101,36 +101,23 @@
       border-bottom: 2px solid #e2e8f0;
     }
     .header-title h1 { 
-      margin: 0 0 6px 0; 
+      margin: 0 0 8px 0; 
       color: #0f172a; 
-      font-size: 26px; 
+      font-size: 30px; 
       font-weight: 800; 
-      text-transform: uppercase;
       letter-spacing: 0.5px;
     }
     .header-title h2 { 
       margin: 0 0 6px 0; 
-      color: #334155; 
-      font-size: 16px; 
-      font-weight: 600; 
+      color: #1e293b; 
+      font-size: 17px; 
+      font-weight: 700; 
     }
     .header-title p { 
-      margin: 0 0 12px 0; 
-      color: #475569; 
-      font-size: 14px; 
-      font-weight: 500; 
-    }
-    .header-title .title-badge { 
-      display: inline-block;
-      margin-top: 6px; 
-      color: #1e293b; 
-      border: 2px dashed #475569; 
-      padding: 6px 20px;
-      border-radius: 6px;
-      font-size: 22px; 
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      background: #f1f5f9;
+      margin: 0 0 6px 0; 
+      color: #334155; 
+      font-size: 14.5px; 
+      font-weight: 600; 
     }
 
     .tree-container { width: 100%; overflow-x: auto; padding: 15px 0; text-align: center; }
@@ -274,7 +261,7 @@
     }
     .sig-line {
       border-top: 1.5px dashed #475569;
-      width: 180px;
+      width: 200px;
       padding-top: 6px;
       font-size: 12px;
       font-weight: 600;
@@ -290,7 +277,6 @@
       body { background: #fff; padding: 0; margin: 0; }
       .container { max-width: 100%; width: 100%; margin: 0; }
       .card { box-shadow: none; border: none; padding: 0; margin: 0; }
-      .header-title .title-badge { background: transparent; }
       .tree-container { overflow: visible; zoom: 85%; }
       .declaration-section { background: transparent; border: 1px dashed #64748b; }
       .comment-textarea { 
@@ -342,12 +328,12 @@
   </div>
 
   <div class="card">
-    <!-- Clean, Large English Header -->
+    <!-- Updated English Header -->
     <div class="header-title">
-      <h1>Tentulia Gram Panchayat</h1>
-      <h2>Block: Murshidabad-Jiaganj | Village: Tentulia</h2>
+      <h1>পরিবার বংশ তালিকা</h1>
+      <h2>Gram Panchayat: Tentulia Gram Panchayat</h2>
+      <p>Block: Murshidabad-Jiaganj | Village: Tentulia</p>
       <p>District: Murshidabad, PIN: 742302</p>
-      <div class="title-badge">-: FAMILY TREE :-</div>
     </div>
 
     <div class="tree-container">
@@ -358,12 +344,13 @@
       <div class="declaration-title">Applicant Remark / Declaration:</div>
       <textarea class="comment-textarea" placeholder="Write your remark or declaration here...">I hereby declare that all the information provided in the family tree above is true and correct to the best of my knowledge. If any information is proven false or incorrect in the future, I shall be held responsible.</textarea>
       
+      <!-- Updated Signatures -->
       <div class="signature-container">
         <div class="sig-box">
-          <div class="sig-line">Panchayet Prodhan Signature</div>
+          <div class="sig-line">Signature of Local Dignitary</div>
         </div>
         <div class="sig-box">
-          <div class="sig-line">Member Signature</div>
+          <div class="sig-line">Signature of Village Dignitary</div>
         </div>
         <div class="sig-box">
           <div class="sig-line">Applicant Signature</div>
@@ -527,4 +514,4 @@
 
 </body>
         </html>
-      
+        

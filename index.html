@@ -40,7 +40,7 @@
     .tf-tree li:first-child::after { border-radius: 5px 0 0 0; }
     .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #475569; width: 0; height: 15px; }
     
-    /* Base Node Box Styling - স্বয়ংক্রিয় উচ্চতা (Height Fit) */
+    /* Base Node Box Styling - স্বয়ংক্রিয় উচ্চতা */
     .node {
       border: 2px solid #475569;
       padding: 10px 8px;
@@ -67,7 +67,7 @@
       color: #166534 !important;
     }
 
-    /* ছবি ও প্রোফাইল প্রেজেন্টেশন উন্নতি */
+    /* ছবি ও প্রোফাইল প্রেজেন্টেশন */
     .node img { 
       width: 55px; 
       height: 55px; 
@@ -111,7 +111,7 @@
       justify-content: center;
     }
 
-    /* আবেদনকারীর মন্তব্য সেকশন (নিচে দেখাবে) */
+    /* আবেদনকারীর মন্তব্য ও স্বাক্ষর সেকশন */
     .declaration-section {
       margin-top: 35px;
       padding: 12px;
@@ -125,25 +125,46 @@
     .declaration-title {
       font-weight: bold;
       font-size: 13px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       color: #0f172a;
       text-decoration: underline;
     }
+
+    /* এডিটেবল মন্তব্য বক্স */
+    .comment-textarea {
+      width: 100%;
+      min-height: 50px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 12px;
+      font-family: Arial, sans-serif;
+      resize: vertical;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.4;
+    }
+
+    /* ৩টি স্বাক্ষর লাইন */
     .signature-container {
-      margin-top: 35px;
+      margin-top: 40px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      font-size: 12px;
-      font-weight: bold;
       color: #334155;
+    }
+    .sig-box {
+      text-align: center;
     }
     .sig-line {
       border-top: 1px dashed #475569;
-      width: 180px;
-      text-align: center;
+      width: 160px;
       padding-top: 4px;
     }
+    
+    .sig-date { font-size: 12px; font-weight: bold; }
+    .sig-member { font-size: 12px; font-weight: bold; }
+    .sig-prodhan { font-size: 10.5px; font-weight: bold; color: #475569; }
 
     /* Print Setup for Single A4 Landscape Page */
     @page {
@@ -156,7 +177,15 @@
       .container { max-width: 100%; width: 100%; margin: 0; }
       .card { box-shadow: none; border: none; padding: 0; margin: 0; }
       .tree-container { overflow: visible; zoom: 85%; }
-      .declaration-section { background: transparent; }
+      .declaration-section { background: transparent; border: 1px dashed #000; }
+      .comment-textarea { 
+        border: none; 
+        padding: 0; 
+        background: transparent; 
+        resize: none; 
+        font-size: 12px;
+        overflow: hidden;
+      }
     }
   </style>
 </head>
@@ -214,12 +243,18 @@
     <!-- আবেদনকারীর মন্তব্য ও সই এর অংশ -->
     <div class="declaration-section">
       <div class="declaration-title">আবেদনকারীর মন্তব্য / ঘোষণা:</div>
-      <div>
-        আমি এতদ্বারা ঘোষণা করছি যে, উপরে প্রদত্ত বংশতালিকার যাবতীয় তথ্য সম্পূর্ণ সত্য ও নির্ভুল। ভবিষ্যতে কোনো তথ্য ভুল বা মিথ্যা প্রমাণিত হলে আমি তার জন্য দায়ী থাকিব।
-      </div>
+      <textarea class="comment-textarea" placeholder="এখানে আপনার মন্তব্য বা ঘোষণা লিখুন...">আমি এতদ্বারা ঘোষণা করছি যে, উপরে প্রদত্ত বংশতালিকার যাবতীয় তথ্য সম্পূর্ণ সত্য ও নির্ভুল। ভবিষ্যতে কোনো তথ্য ভুল বা মিথ্যা প্রমাণিত হলে আমি তার জন্য দায়ী থাকিব।</textarea>
+      
       <div class="signature-container">
-        <div>তারিখ: .....................</div>
-        <div class="sig-line">আবেদনকারীর স্বাক্ষর</div>
+        <div class="sig-box sig-date">
+          তারিখ: .....................
+        </div>
+        <div class="sig-box sig-member">
+          <div class="sig-line">Member স্বাক্ষর</div>
+        </div>
+        <div class="sig-box sig-prodhan">
+          <div class="sig-line">Panchayet Prodhan স্বাক্ষর</div>
+        </div>
       </div>
     </div>
   </div>
@@ -380,4 +415,4 @@
 
 </body>
         </html>
-        
+  

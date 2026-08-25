@@ -21,12 +21,16 @@
     .card { 
       background: #ffffff; 
       border-radius: 16px; 
-      padding: 24px; 
+      padding: 28px; 
       margin-bottom: 24px; 
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); 
       border: 1px solid #e2e8f0;
       text-align: left; 
+      display: flex;
+      flex-direction: column;
+      min-height: 850px; /* Ensures space to push declaration down */
     }
+
     .card h3 { 
       margin-top: 0; 
       font-size: 18px;
@@ -93,37 +97,37 @@
     }
     .btn-print:hover { background: #1d4ed8; }
     
-    /* Prominent, Large & Uppercase Header Styling */
+    /* Premium Header Design with Equal Font Sizing */
     .header-title { 
       text-align: center; 
       margin-bottom: 25px; 
-      padding-bottom: 18px;
-      border-bottom: 2px solid #cbd5e1;
+      padding-bottom: 16px;
+      border-bottom: 2px dashed #94a3b8;
       text-transform: uppercase;
     }
     .header-title h1 { 
       margin: 0 0 10px 0; 
       color: #0f172a; 
-      font-size: 34px; 
+      font-size: 32px; 
       font-weight: 900; 
       letter-spacing: 2px;
     }
-    .header-title h2 { 
-      margin: 0 0 8px 0; 
-      color: #1e293b; 
-      font-size: 20px; 
-      font-weight: 800; 
-      letter-spacing: 1px;
-    }
-    .header-title p { 
-      margin: 0 0 6px 0; 
-      color: #334155; 
-      font-size: 16px; 
-      font-weight: 700; 
-      letter-spacing: 0.5px;
+    .header-details-line {
+      color: #1e293b;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      margin: 5px 0;
+      line-height: 1.6;
     }
 
-    .tree-container { width: 100%; overflow-x: auto; padding: 15px 0; text-align: center; }
+    .tree-container { 
+      width: 100%; 
+      overflow-x: auto; 
+      padding: 15px 0; 
+      text-align: center; 
+      flex-grow: 1; /* Allows tree area to fill remaining space */
+    }
     .tf-tree { display: inline-block; text-align: center; }
     .tf-tree ul { display: flex; padding-top: 18px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
     .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 18px 5px 0 5px; }
@@ -220,10 +224,11 @@
     }
     .delete-btn:hover { opacity: 1; }
 
+    /* Sticky Declaration Section at Bottom */
     .declaration-section {
-      margin-top: 35px;
-      padding: 16px;
-      border: 1.5px dashed #94a3b8;
+      margin-top: auto; /* Pushes to bottom of container */
+      padding: 16px 20px;
+      border: 1.5px dashed #64748b;
       border-radius: 12px;
       text-align: left;
       font-size: 12.5px;
@@ -231,16 +236,17 @@
       background: #f8fafc;
     }
     .declaration-title {
-      font-weight: 700;
+      font-weight: 800;
       font-size: 13.5px;
       margin-bottom: 8px;
       color: #0f172a;
       text-decoration: underline;
+      text-transform: uppercase;
     }
 
     .comment-textarea {
       width: 100%;
-      min-height: 55px;
+      min-height: 50px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
       padding: 10px;
@@ -253,7 +259,7 @@
     }
 
     .signature-container {
-      margin-top: 50px;
+      margin-top: 45px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -264,24 +270,31 @@
     }
     .sig-line {
       border-top: 1.5px dashed #475569;
-      width: 200px;
+      width: 220px;
       padding-top: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #1e293b;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #0f172a;
     }
 
     @page {
       size: A4 landscape;
-      margin: 6mm;
+      margin: 8mm;
     }
     @media print {
       .no-print { display: none !important; }
       body { background: #fff; padding: 0; margin: 0; }
       .container { max-width: 100%; width: 100%; margin: 0; }
-      .card { box-shadow: none; border: none; padding: 0; margin: 0; }
+      .card { 
+        box-shadow: none; 
+        border: none; 
+        padding: 0; 
+        margin: 0; 
+        height: 98vh; /* Forces card to fit full page */
+        justify-content: space-between; 
+      }
       .tree-container { overflow: visible; zoom: 85%; }
-      .declaration-section { background: transparent; border: 1px dashed #64748b; }
+      .declaration-section { background: transparent; border: 1.5px dashed #475569; margin-top: auto; }
       .comment-textarea { 
         border: none; 
         padding: 0; 
@@ -331,18 +344,18 @@
   </div>
 
   <div class="card">
-    <!-- Large, Bold & Uppercase English Header -->
+    <!-- Styled Uniform Header -->
     <div class="header-title">
       <h1>FAMILY TREE</h1>
-      <h2>GRAM PANCHAYAT: TENTULIA GRAM PANCHAYAT</h2>
-      <p>BLOCK: MURSHIDABAD-JIAGANJ | VILLAGE: TENTULIA</p>
-      <p>DISTRICT: MURSHIDABAD, PIN: 742302</p>
+      <div class="header-details-line">GRAM PANCHAYAT: TENTULIA GRAM PANCHAYAT</div>
+      <div class="header-details-line">BLOCK: MURSHIDABAD-JIAGANJ, VILLAGE: TENTULIA, POST OFFICE: TENTULIA, POLICE STATION: MURSHIDABAD, DISTRICT: MURSHIDABAD, PIN: 742302</div>
     </div>
 
     <div class="tree-container">
       <div id="tree" class="tf-tree"></div>
     </div>
 
+    <!-- Declaration Box Fixed to Bottom -->
     <div class="declaration-section">
       <div class="declaration-title">Applicant Remark / Declaration:</div>
       <textarea class="comment-textarea" placeholder="Write your remark or declaration here...">I hereby declare that all the information provided in the family tree above is true and correct to the best of my knowledge. If any information is proven false or incorrect in the future, I shall be held responsible.</textarea>
@@ -461,7 +474,7 @@
     const treeDiv = document.getElementById('tree');
 
     if (roots.length === 0) {
-      treeDiv.innerHTML = '<p style="color:#94a3b8; font-size:14px;">No members added yet. Add "Grandfather" as the first member.</p>';
+      treeDiv.innerHTML = '<p style="color:#94a3b8; font-size:14px; margin-top: 40px;">No members added yet. Add "Grandfather" as the first member.</p>';
       return;
     }
 
@@ -515,5 +528,5 @@
 </script>
 
 </body>
-        </html>
-  
+      </html>
+        

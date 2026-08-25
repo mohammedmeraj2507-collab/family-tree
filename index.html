@@ -12,8 +12,10 @@
     .card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); text-align: left; }
     .card h3 { margin-top: 0; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
     
-    .form-group { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
-    .form-group input, .form-group select { flex: 1; min-width: 160px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+    .form-group { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; align-items: center; }
+    .form-group input[type="text"], .form-group select { flex: 1; min-width: 160px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+    .checkbox-label { display: flex; align-items: center; gap: 6px; font-weight: bold; font-size: 14px; color: #b91c1c; background: #fee2e2; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+    
     .btn { background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
     .btn:hover { background: #047857; }
     .btn-print { background: #2563eb; margin-top: 15px; }
@@ -38,26 +40,38 @@
     .tf-tree li:first-child::after { border-radius: 5px 0 0 0; }
     .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #475569; width: 0; height: 15px; }
     
-    /* Fixed Equal Size Node Box */
+    /* Base Node Box Styling (স্বাভাবিক বক্স - সাদা) */
     .node {
-      border: 2px solid #1e293b;
+      border: 2px solid #475569;
       padding: 8px 6px;
       display: inline-flex;
       flex-direction: column;
       align-items: center;
       border-radius: 8px;
-      background: #fff;
+      background: #ffffff;
       width: 150px;
       min-height: 230px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.08);
       position: relative;
       word-break: break-word;
     }
+
+    /* সিগন্যাল যুক্ত বিশেষ লিংকেজ বক্স (হাইলাইটেড) */
+    .node.signal-box {
+      border: 2.5px solid #dc2626 !important;
+      background: #fef2f2 !important;
+    }
+    .node.signal-box .node-relation {
+      background: #fca5a5 !important;
+      color: #7f1d1d !important;
+    }
+
     .node img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 4px; border: 1px solid #cbd5e1; }
     .avatar-placeholder { width: 50px; height: 50px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 4px; }
-    .node-relation { font-size: 10px; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: #334155; font-weight: bold; margin-bottom: 4px; }
+    .node-relation { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-bottom: 4px; background: #e2e8f0; color: #334155; }
     .node-name { font-weight: bold; font-size: 13px; color: #0f172a; margin-bottom: 4px; }
     .node-details { font-size: 10px; color: #475569; text-align: center; line-height: 1.35; width: 100%; }
+    
     .delete-btn {
       position: absolute;
       top: 4px;
@@ -120,6 +134,9 @@
     </div>
     <div class="form-group">
       <input id="photo" type="file" accept="image/*">
+      <label class="checkbox-label">
+        <input id="isSignal" type="checkbox"> 🔴 সিগন্যাল বক্স (মূল লিংক চিহ্নিত করুন)
+      </label>
       <button class="btn" onclick="addMember()">সদস্য যোগ করুন</button>
     </div>
   </div>
@@ -154,6 +171,7 @@
     const voterYearInput = document.getElementById('voterYear');
     const parentSelect = document.getElementById('parent');
     const photoInput = document.getElementById('photo');
+    const isSignalInput = document.getElementById('isSignal');
 
     const name = nameInput.value.trim();
     const relation = relationInput.value;
@@ -164,6 +182,7 @@
     const serialNo = serialNoInput.value.trim();
     const voterYear = voterYearInput.value.trim();
     const parent = parentSelect.value;
+    const isSignal = isSignalInput.checked;
     const file = photoInput.files[0];
 
     if (!name) {
@@ -183,6 +202,7 @@
         serialNo,
         voterYear,
         parent,
+        isSignal,
         img: imgData || ''
       };
       members.push(newMember);
@@ -196,6 +216,7 @@
       serialNoInput.value = '';
       voterYearInput.value = '';
       photoInput.value = '';
+      isSignalInput.checked = false;
 
       updateUI();
     };
@@ -224,14 +245,12 @@
   }
 
   function updateUI() {
-    // ১. ড্রপডাউন আপডেট করা
     const parentSelect = document.getElementById('parent');
     parentSelect.innerHTML = '<option value="">কার অধীনে যুক্ত হবে? (অভিভাবক নির্বাচন করুন)</option>';
     members.forEach(m => {
       parentSelect.innerHTML += `<option value="${m.id}">${m.name} (${m.relation})</option>`;
     });
 
-    // ২. বংশতালিকা রেন্ডার করা
     const roots = members.filter(m => !m.parent);
     const treeDiv = document.getElementById('tree');
 
@@ -250,10 +269,7 @@
       ? `<img src="${person.img}" alt="${person.name}">` 
       : `<div class="avatar-placeholder">👤</div>`;
 
-    // আধার সবার উপরে
     let aadharHTML = person.aadharNo ? `<div>Aadhaar: ${person.aadharNo}</div>` : '';
-    
-    // ভোটার ডিটেলস নিচে
     let voterHTML = person.voterId ? `<div>Voter: ${person.voterId}</div>` : '';
     let assemblyHTML = person.assembly ? `<div>${person.assembly}</div>` : '';
     
@@ -262,11 +278,13 @@
     if (person.serialNo) partSerialArr.push(`Sl: ${person.serialNo}`);
     let partSerialHTML = partSerialArr.length > 0 ? `<div>${partSerialArr.join(', ')}</div>` : '';
 
-    // ভোটার লিস্টের বছর একদম নিচে
     let yearHTML = person.voterYear ? `<div>Voter List Year: ${person.voterYear}</div>` : '';
 
+    // সিগন্যাল টিক করা থাকলে বিশেষ ক্লাসিং (signal-box) যোগ হবে
+    let signalClass = person.isSignal ? 'signal-box' : '';
+
     let html = `<li>
-      <div class="node">
+      <div class="node ${signalClass}">
         <button class="delete-btn no-print" onclick="deleteMember('${person.id}')" title="ডিলিট করুন">✕</button>
         ${imageHTML}
         <div class="node-relation">${person.relation}</div>
@@ -288,10 +306,9 @@
     return html;
   }
 
-  // প্রাথমিক অবস্থা
   updateUI();
 </script>
 
 </body>
-  </html>
+        </html>
   

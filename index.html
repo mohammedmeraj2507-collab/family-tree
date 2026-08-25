@@ -40,7 +40,7 @@
     .tf-tree li:first-child::after { border-radius: 5px 0 0 0; }
     .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #475569; width: 0; height: 15px; }
     
-    /* Base Node Box Styling - স্বয়ংক্রিয় উচ্চতা */
+    /* Base Node Box Styling */
     .node {
       border: 2px solid #475569;
       padding: 10px 8px;
@@ -145,9 +145,9 @@
       line-height: 1.4;
     }
 
-    /* ৩টি স্বাক্ষর লাইন */
+    /* ৩টি স্বাক্ষর লাইন (নতুন ক্রম অনুযায়ী) */
     .signature-container {
-      margin-top: 40px;
+      margin-top: 45px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -158,13 +158,11 @@
     }
     .sig-line {
       border-top: 1px dashed #475569;
-      width: 160px;
+      width: 170px;
       padding-top: 4px;
+      font-size: 12px;
+      font-weight: bold;
     }
-    
-    .sig-date { font-size: 12px; font-weight: bold; }
-    .sig-member { font-size: 12px; font-weight: bold; }
-    .sig-prodhan { font-size: 10.5px; font-weight: bold; color: #475569; }
 
     /* Print Setup for Single A4 Landscape Page */
     @page {
@@ -240,20 +238,23 @@
       <div id="tree" class="tf-tree"></div>
     </div>
 
-    <!-- আবেদনকারীর মন্তব্য ও সই এর অংশ -->
+    <!-- আবেদনকারীর মন্তব্য ও ৩টি স্বাক্ষর সেকশন -->
     <div class="declaration-section">
       <div class="declaration-title">আবেদনকারীর মন্তব্য / ঘোষণা:</div>
       <textarea class="comment-textarea" placeholder="এখানে আপনার মন্তব্য বা ঘোষণা লিখুন...">আমি এতদ্বারা ঘোষণা করছি যে, উপরে প্রদত্ত বংশতালিকার যাবতীয় তথ্য সম্পূর্ণ সত্য ও নির্ভুল। ভবিষ্যতে কোনো তথ্য ভুল বা মিথ্যা প্রমাণিত হলে আমি তার জন্য দায়ী থাকিব।</textarea>
       
       <div class="signature-container">
-        <div class="sig-box sig-date">
-          তারিখ: .....................
+        <!-- ১. পঞ্চায়েত প্রধান স্বাক্ষর -->
+        <div class="sig-box">
+          <div class="sig-line">পঞ্চায়েত প্রধান স্বাক্ষর</div>
         </div>
-        <div class="sig-box sig-member">
-          <div class="sig-line">Member স্বাক্ষর</div>
+        <!-- ২. মেম্বার স্বাক্ষর -->
+        <div class="sig-box">
+          <div class="sig-line">মেম্বার স্বাক্ষর</div>
         </div>
-        <div class="sig-box sig-prodhan">
-          <div class="sig-line">Panchayet Prodhan স্বাক্ষর</div>
+        <!-- ৩. আবেদনকারীর স্বাক্ষর -->
+        <div class="sig-box">
+          <div class="sig-line">আবেদনকারীর স্বাক্ষর</div>
         </div>
       </div>
     </div>
@@ -414,5 +415,5 @@
 </script>
 
 </body>
-        </html>
+  </html>
   

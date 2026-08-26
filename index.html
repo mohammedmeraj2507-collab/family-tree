@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,27 +88,35 @@
     }
     .header-details-line .label { font-weight: 900; color: #000000; }
 
-    /* Tree Styling with GREEN Lines */
+    /* Custom Layout Area */
     .tree-container { 
+      position: relative;
       width: 100%; 
       overflow-x: auto; 
-      padding: 10px 0; 
-      text-align: center; 
+      padding: 20px 0; 
+      min-height: 300px;
     }
-    .tf-tree { display: inline-block; text-align: center; }
-    .tf-tree ul { display: flex; padding-top: 16px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
-    .tf-tree li { display: flex; flex-direction: column; align-items: center; list-style-type: none; position: relative; padding: 16px 6px 0 6px; }
-    
-    /* GREEN SIGNAL LINES */
-    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2.5px solid #16a34a; width: 50%; height: 16px; }
-    .tf-tree li::after { right: auto; left: 50%; border-left: 2.5px solid #16a34a; }
-    .tf-tree li:only-child::after, .tf-tree li:only-child::before { display: none; }
-    .tf-tree li:only-child { padding-top: 0; }
-    .tf-tree li:first-child::before, .tf-tree li:last-child::after { border: none; }
-    .tf-tree li:last-child::before { border-right: 2.5px solid #16a34a; border-radius: 0 4px 0 0; }
-    .tf-tree li:first-child::after { border-radius: 4px 0 0 0; }
-    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2.5px solid #16a34a; width: 0; height: 16px; }
-    
+
+    /* SVG Lines Overlay */
+    #svg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .level-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 50px;
+      position: relative;
+      z-index: 2;
+    }
+
     .node {
       border: 1.5px solid #cbd5e1;
       padding: 8px;
@@ -125,19 +133,19 @@
 
     /* Custom Signal / Highlight Styles */
     .node.signal-green {
-      border: 2px solid #16a34a !important;
+      border: 2.5px solid #16a34a !important;
       background: #f0fdf4 !important;
     }
     .node.signal-green .node-relation { background: #dcfce7 !important; color: #15803d !important; }
 
     .node.signal-gold {
-      border: 2px solid #d97706 !important;
+      border: 2.5px solid #d97706 !important;
       background: #fffbe6 !important;
     }
     .node.signal-gold .node-relation { background: #fef3c7 !important; color: #b45309 !important; }
 
     .node.signal-blue {
-      border: 2px solid #2563eb !important;
+      border: 2.5px solid #2563eb !important;
       background: #eff6ff !important;
     }
     .node.signal-blue .node-relation { background: #dbeafe !important; color: #1e40af !important; }
@@ -330,8 +338,9 @@
       </div>
     </div>
 
-    <div class="tree-container">
-      <div id="tree" class="tf-tree"></div>
+    <div class="tree-container" id="tree-container">
+      <svg id="svg-canvas"></svg>
+      <div id="tree-rows"></div>
     </div>
 
     <div class="declaration-section">
@@ -388,7 +397,6 @@
       return;
     }
 
-    // Auto default green signal for Grandfather if no signal chosen
     if (relation === 'Grandfather' && signalType === 'none') {
       signalType = 'green';
     }
@@ -446,6 +454,12 @@
     }
   }
 
+  function getDepth(id) {
+    const member = members.find(m => m.id === id);
+    if (!member || !member.parent) return 0;
+    return 1 + getDepth(member.parent);
+  }
+
   function updateUI() {
     const parentSelect = document.getElementById('parent');
     parentSelect.innerHTML = '<option value="">Select Guardian (Under whom linked?)</option>';
@@ -453,20 +467,36 @@
       parentSelect.innerHTML += `<option value="${m.id}">${m.name} (${m.relation})</option>`;
     });
 
-    const roots = members.filter(m => !m.parent);
-    const treeDiv = document.getElementById('tree');
+    const rowsDiv = document.getElementById('tree-rows');
+    rowsDiv.innerHTML = '';
 
-    if (roots.length === 0) {
-      treeDiv.innerHTML = '<p style="color:#94a3b8; font-size:13px; margin-top: 20px;">No members added yet. Add "Grandfather" or Main Guardian first.</p>';
+    if (members.length === 0) {
+      rowsDiv.innerHTML = '<p style="color:#94a3b8; font-size:13px; margin-top: 20px; text-align:center;">No members added yet.</p>';
+      drawLines();
       return;
     }
 
-    treeDiv.innerHTML = '<ul>' + roots.map(r => renderNode(r)).join('') + '</ul>';
+    // Group members by level depth
+    const levels = {};
+    members.forEach(m => {
+      const d = getDepth(m.id);
+      if (!levels[d]) levels[d] = [];
+      levels[d].push(m);
+    });
+
+    Object.keys(levels).sort((a,b)=>a-b).forEach(d => {
+      const row = document.createElement('div');
+      row.className = 'level-row';
+      levels[d].forEach(person => {
+        row.innerHTML += createNodeHTML(person);
+      });
+      rowsDiv.appendChild(row);
+    });
+
+    setTimeout(drawLines, 50);
   }
 
-  function renderNode(person) {
-    const children = members.filter(m => m.parent === person.id);
-    
+  function createNodeHTML(person) {
     let imageHTML = person.img 
       ? `<img src="${person.img}" alt="${person.name}">` 
       : `<div class="avatar-placeholder">👤</div>`;
@@ -494,8 +524,8 @@
       applicantBadge = '<div class="applicant-badge" style="background:#2563eb;">Applicant</div>';
     }
 
-    let html = `<li>
-      <div class="node ${signalClass}">
+    return `
+      <div class="node ${signalClass}" id="node-${person.id}">
         ${applicantBadge}
         <button class="delete-btn no-print" onclick="deleteMember('${person.id}')" title="Delete">✕</button>
         ${imageHTML}
@@ -509,18 +539,49 @@
           ${yearHTML}
         </div>
       </div>`;
-
-    if (children.length > 0) {
-      html += '<ul>' + children.map(c => renderNode(c)).join('') + '</ul>';
-    }
-
-    html += '</li>';
-    return html;
   }
 
+  function drawLines() {
+    const svg = document.getElementById('svg-canvas');
+    const container = document.getElementById('tree-container');
+    svg.innerHTML = '';
+
+    const containerRect = container.getBoundingClientRect();
+
+    members.forEach(person => {
+      if (person.parent) {
+        const childEl = document.getElementById(`node-${person.id}`);
+        const parentEl = document.getElementById(`node-${person.parent}`);
+
+        if (childEl && parentEl) {
+          const cRect = childEl.getBoundingClientRect();
+          const pRect = parentEl.getBoundingClientRect();
+
+          const x1 = pRect.left + pRect.width / 2 - containerRect.left;
+          const y1 = pRect.bottom - containerRect.top;
+          const x2 = cRect.left + cRect.width / 2 - containerRect.left;
+          const y2 = cRect.top - containerRect.top;
+
+          const midY = y1 + (y2 - y1) / 2;
+
+          const pathStr = `M ${x1} ${y1} L ${x1} ${midY} L ${x2} ${midY} L ${x2} ${y2}`;
+
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d', pathStr);
+          path.setAttribute('stroke', '#16a34a');
+          path.setAttribute('stroke-width', '2.5');
+          path.setAttribute('fill', 'none');
+
+          svg.appendChild(path);
+        }
+      }
+    });
+  }
+
+  window.addEventListener('resize', drawLines);
   updateUI();
 </script>
 
 </body>
-                                                           </html>
-        
+        </html>
+          

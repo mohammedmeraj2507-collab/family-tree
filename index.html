@@ -51,20 +51,6 @@
       color: #334155;
     }
 
-    .checkbox-label { 
-      display: flex; 
-      align-items: center; 
-      gap: 6px; 
-      font-weight: 600; 
-      font-size: 12px; 
-      color: #15803d; 
-      background: #f0fdf4; 
-      border: 1px solid #bbf7d0;
-      padding: 6px 10px; 
-      border-radius: 6px; 
-      cursor: pointer; 
-    }
-    
     .btn { 
       background: #059669; 
       color: white; 
@@ -102,6 +88,7 @@
     }
     .header-details-line .label { font-weight: 900; color: #000000; }
 
+    /* Tree Styling with GREEN Lines */
     .tree-container { 
       width: 100%; 
       overflow-x: auto; 
@@ -109,17 +96,18 @@
       text-align: center; 
     }
     .tf-tree { display: inline-block; text-align: center; }
-    .tf-tree ul { display: flex; padding-top: 14px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
-    .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 14px 4px 0 4px; }
+    .tf-tree ul { display: flex; padding-top: 16px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
+    .tf-tree li { display: flex; flex-direction: column; align-items: center; list-style-type: none; position: relative; padding: 16px 6px 0 6px; }
     
-    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #64748b; width: 50%; height: 14px; }
-    .tf-tree li::after { right: auto; left: 50%; border-left: 2px solid #64748b; }
+    /* GREEN SIGNAL LINES */
+    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2.5px solid #16a34a; width: 50%; height: 16px; }
+    .tf-tree li::after { right: auto; left: 50%; border-left: 2.5px solid #16a34a; }
     .tf-tree li:only-child::after, .tf-tree li:only-child::before { display: none; }
     .tf-tree li:only-child { padding-top: 0; }
     .tf-tree li:first-child::before, .tf-tree li:last-child::after { border: none; }
-    .tf-tree li:last-child::before { border-right: 2px solid #64748b; border-radius: 0 4px 0 0; }
+    .tf-tree li:last-child::before { border-right: 2.5px solid #16a34a; border-radius: 0 4px 0 0; }
     .tf-tree li:first-child::after { border-radius: 4px 0 0 0; }
-    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #64748b; width: 0; height: 14px; }
+    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2.5px solid #16a34a; width: 0; height: 16px; }
     
     .node {
       border: 1.5px solid #cbd5e1;
@@ -132,16 +120,40 @@
       width: 160px;
       position: relative;
       word-break: break-word;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     }
 
-    /* Automatic Green Style for Grandfather / Signal */
-    .node.signal-box {
+    /* Custom Signal / Highlight Styles */
+    .node.signal-green {
       border: 2px solid #16a34a !important;
       background: #f0fdf4 !important;
     }
-    .node.signal-box .node-relation {
-      background: #dcfce7 !important;
-      color: #15803d !important;
+    .node.signal-green .node-relation { background: #dcfce7 !important; color: #15803d !important; }
+
+    .node.signal-gold {
+      border: 2px solid #d97706 !important;
+      background: #fffbe6 !important;
+    }
+    .node.signal-gold .node-relation { background: #fef3c7 !important; color: #b45309 !important; }
+
+    .node.signal-blue {
+      border: 2px solid #2563eb !important;
+      background: #eff6ff !important;
+    }
+    .node.signal-blue .node-relation { background: #dbeafe !important; color: #1e40af !important; }
+
+    .applicant-badge {
+      position: absolute;
+      top: -10px;
+      background: #dc2626;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
     .node img { 
@@ -246,38 +258,18 @@
       color: #0f172a;
     }
 
-    /* Print Setup Fix - Guarantees 1 Page Fit */
     @page {
-      size: auto;
-      margin: 8mm;
+      size: A4 portrait;
+      margin: 6mm;
     }
     @media print {
       .no-print { display: none !important; }
-      body { 
-        background: #fff; 
-        padding: 0; 
-        margin: 0; 
-      }
+      body { background: #fff; padding: 0; margin: 0; }
       .container { max-width: 100%; width: 100%; margin: 0; }
-      .card { 
-        box-shadow: none; 
-        border: none; 
-        padding: 0; 
-        margin: 0; 
-      }
+      .card { box-shadow: none; border: none; padding: 0; margin: 0; }
       .tree-container { overflow: visible; }
-      .declaration-section { 
-        background: transparent; 
-        border: 1.5px dashed #475569; 
-        page-break-inside: avoid;
-        break-inside: avoid;
-      }
-      .comment-textarea { 
-        border: none; 
-        padding: 0; 
-        background: transparent; 
-        resize: none;
-      }
+      .declaration-section { background: transparent; border: 1.5px dashed #475569; break-inside: avoid; }
+      .comment-textarea { border: none; padding: 0; background: transparent; resize: none; }
     }
   </style>
 </head>
@@ -289,11 +281,12 @@
     <div class="form-group">
       <input id="name" type="text" placeholder="Member Name (Required)">
       <select id="relation">
-        <option value="Grandfather">Grandfather / Primary Guardian</option>
+        <option value="Grandfather">Grandfather</option>
         <option value="Father">Father</option>
         <option value="Mother">Mother</option>
         <option value="Son">Son</option>
         <option value="Daughter">Daughter</option>
+        <option value="Self / Applicant">Self / Applicant</option>
       </select>
       <input id="aadharNo" type="text" placeholder="Aadhaar Number">
     </div>
@@ -306,14 +299,17 @@
       <input id="serialNo" type="text" placeholder="Serial No.">
       <input id="voterYear" type="text" placeholder="Voter List Year (e.g., 2024 / 2026)">
       <select id="parent">
-        <option value="">Under whom will it be added? (Select Guardian)</option>
+        <option value="">Select Guardian (Under whom linked?)</option>
       </select>
     </div>
     <div class="form-group">
       <input id="photo" type="file" accept="image/*">
-      <label class="checkbox-label">
-        <input id="isSignal" type="checkbox"> 🟢 Force Signal Box (Highlight)
-      </label>
+      <select id="signalType">
+        <option value="none">Normal Box</option>
+        <option value="green">🟢 Green Signal (Highlight)</option>
+        <option value="gold">⭐ Applicant (Gold Signal)</option>
+        <option value="blue">🔵 Applicant (Blue Signal)</option>
+      </select>
       <button class="btn" id="addBtn" onclick="addMember()">Add Member</button>
     </div>
   </div>
@@ -373,7 +369,7 @@
     const voterYearInput = document.getElementById('voterYear');
     const parentSelect = document.getElementById('parent');
     const photoInput = document.getElementById('photo');
-    const isSignalInput = document.getElementById('isSignal');
+    const signalTypeInput = document.getElementById('signalType');
 
     const name = nameInput.value.trim();
     const relation = relationInput.value;
@@ -384,14 +380,17 @@
     const serialNo = serialNoInput.value.trim();
     const voterYear = voterYearInput.value.trim();
     const parent = parentSelect.value;
-    
-    // Auto Green for Grandfather
-    const isSignal = isSignalInput.checked || relation === 'Grandfather';
+    let signalType = signalTypeInput.value;
     const file = photoInput.files[0];
 
     if (!name) {
-      alert('Please enter the member\'s name!');
+      alert('Please enter member name!');
       return;
+    }
+
+    // Auto default green signal for Grandfather if no signal chosen
+    if (relation === 'Grandfather' && signalType === 'none') {
+      signalType = 'green';
     }
 
     const saveAndRefresh = (imgData) => {
@@ -406,7 +405,7 @@
         serialNo,
         voterYear,
         parent,
-        isSignal,
+        signalType,
         img: imgData || ''
       };
       members.push(newMember);
@@ -419,7 +418,7 @@
       serialNoInput.value = '';
       voterYearInput.value = '';
       photoInput.value = '';
-      isSignalInput.checked = false;
+      signalTypeInput.value = 'none';
 
       updateUI();
     };
@@ -436,7 +435,7 @@
   }
 
   function deleteMember(id) {
-    if (confirm('Are you sure you want to delete this member and all their children?')) {
+    if (confirm('Are you sure you want to delete this member?')) {
       const removeRecursive = (targetId) => {
         const children = members.filter(m => m.parent === targetId);
         children.forEach(c => removeRecursive(c.id));
@@ -449,7 +448,7 @@
 
   function updateUI() {
     const parentSelect = document.getElementById('parent');
-    parentSelect.innerHTML = '<option value="">Under whom will it be added? (Select Guardian)</option>';
+    parentSelect.innerHTML = '<option value="">Select Guardian (Under whom linked?)</option>';
     members.forEach(m => {
       parentSelect.innerHTML += `<option value="${m.id}">${m.name} (${m.relation})</option>`;
     });
@@ -458,7 +457,7 @@
     const treeDiv = document.getElementById('tree');
 
     if (roots.length === 0) {
-      treeDiv.innerHTML = '<p style="color:#94a3b8; font-size:13px; margin-top: 20px;">No members added yet. Add "Grandfather" as the first member.</p>';
+      treeDiv.innerHTML = '<p style="color:#94a3b8; font-size:13px; margin-top: 20px;">No members added yet. Add "Grandfather" or Main Guardian first.</p>';
       return;
     }
 
@@ -483,10 +482,21 @@
 
     let yearHTML = person.voterYear ? `<div>Voter List Year: <span class="val">${person.voterYear}</span></div>` : '';
 
-    let signalClass = person.isSignal ? 'signal-box' : '';
+    let signalClass = '';
+    let applicantBadge = '';
+    if (person.signalType === 'green') signalClass = 'signal-green';
+    if (person.signalType === 'gold') {
+      signalClass = 'signal-gold';
+      applicantBadge = '<div class="applicant-badge">Applicant</div>';
+    }
+    if (person.signalType === 'blue') {
+      signalClass = 'signal-blue';
+      applicantBadge = '<div class="applicant-badge" style="background:#2563eb;">Applicant</div>';
+    }
 
     let html = `<li>
       <div class="node ${signalClass}">
+        ${applicantBadge}
         <button class="delete-btn no-print" onclick="deleteMember('${person.id}')" title="Delete">✕</button>
         ${imageHTML}
         <div class="node-relation">${person.relation}</div>
@@ -512,5 +522,5 @@
 </script>
 
 </body>
-        </html>
+                                                           </html>
         

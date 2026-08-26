@@ -102,7 +102,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 5;
+      z-index: 1;
     }
 
     .tree-container { 
@@ -110,7 +110,7 @@
       width: 100%; 
       padding: 10px 0; 
       min-height: 250px;
-      z-index: 10;
+      z-index: 2;
     }
 
     .level-row {
@@ -290,6 +290,10 @@
       .declaration-section { background: transparent; border: 1px dashed #475569; margin-top: 10px; padding: 6px; }
       .comment-textarea { border: none; padding: 0; background: transparent; resize: none; min-height: auto; }
       .signature-container { margin-top: 20px; }
+      #svg-canvas {
+        width: 100% !important;
+        height: 100% !important;
+      }
     }
   </style>
 </head>
@@ -350,7 +354,7 @@
       </div>
     </div>
 
-    <div class="tree-wrapper">
+    <div class="tree-wrapper" id="tree-wrapper">
       <svg id="svg-canvas"></svg>
       <div class="tree-container" id="tree-container">
         <div id="tree-rows"></div>
@@ -506,7 +510,7 @@
       rowsDiv.appendChild(row);
     });
 
-    setTimeout(drawLines, 80);
+    setTimeout(drawLines, 100);
   }
 
   function createNodeHTML(person) {
@@ -556,10 +560,15 @@
 
   function drawLines() {
     const svg = document.getElementById('svg-canvas');
-    const wrapper = document.querySelector('.tree-wrapper');
+    const wrapper = document.getElementById('tree-wrapper');
     if (!svg || !wrapper) return;
     
     svg.innerHTML = '';
+    
+    // Set explicit width and height matching wrapper
+    svg.setAttribute('width', wrapper.offsetWidth);
+    svg.setAttribute('height', wrapper.offsetHeight);
+
     const wrapperRect = wrapper.getBoundingClientRect();
 
     members.forEach(person => {
@@ -571,9 +580,9 @@
           const cRect = childEl.getBoundingClientRect();
           const pRect = parentEl.getBoundingClientRect();
 
-          const x1 = pRect.left + pRect.width / 2 - wrapperRect.left;
+          const x1 = (pRect.left + pRect.width / 2) - wrapperRect.left;
           const y1 = pRect.bottom - wrapperRect.top;
-          const x2 = cRect.left + cRect.width / 2 - wrapperRect.left;
+          const x2 = (cRect.left + cRect.width / 2) - wrapperRect.left;
           const y2 = cRect.top - wrapperRect.top;
 
           const midY = y1 + (y2 - y1) / 2;
@@ -597,14 +606,14 @@
     drawLines();
     setTimeout(() => {
       window.print();
-    }, 150);
+    }, 200);
   }
 
   window.addEventListener('resize', drawLines);
-  window.onbeforeprint = drawLines;
+  window.addEventListener('beforeprint', drawLines);
   updateUI();
 </script>
 
 </body>
         </html>
-  
+        

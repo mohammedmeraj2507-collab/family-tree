@@ -566,7 +566,6 @@
     
     svg.innerHTML = '';
     
-    // Add arrow marker definitions
     const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
     defs.innerHTML = `
       <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -583,7 +582,6 @@
 
     const wrapperRect = wrapper.getBoundingClientRect();
 
-    // Group children by parent depth
     const groups = {};
     members.forEach(m => {
       if (m.parent) {
@@ -592,7 +590,6 @@
       }
     });
 
-    // Check level 0 couple (Grandfather & Grandmother)
     const level0 = members.filter(m => getDepth(m.id) === 0);
     const couples = level0.filter(m => m.relation === 'Grandfather' || m.relation === 'Grandmother');
 
@@ -615,7 +612,6 @@
         coupleCenter = (x1 + x2) / 2;
         coupleY = bracketY;
 
-        // Draw bracket line connecting Grandfather & Grandmother like image sketch
         const couplePathStr = `M ${x1} ${yBase} L ${x1} ${bracketY} L ${x2} ${bracketY} L ${x2} ${yBase}`;
         const couplePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         couplePath.setAttribute('d', couplePathStr);
@@ -626,7 +622,6 @@
       }
     }
 
-    // Process parents and their children lines with Arrows
     Object.keys(groups).forEach(parentId => {
       const children = groups[parentId];
       const parentEl = document.getElementById(`node-${parentId}`);
@@ -636,4 +631,14 @@
       if (coupleCenter !== null && couples.some(c => c.id === parentId)) {
         startX = coupleCenter;
         startY = coupleY;
-      } else if (par
+      } else if (parentEl) {
+        const pRect = parentEl.getBoundingClientRect();
+        startX = (pRect.left + pRect.width / 2) - wrapperRect.left;
+        startY = (pRect.bottom - wrapperRect.top);
+      } else {
+        return;
+      }
+
+      if (children.length === 0) return;
+
+      co

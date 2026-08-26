@@ -574,16 +574,6 @@
 
     const wrapperRect = wrapper.getBoundingClientRect();
 
-    // Group children by their parent(s) to handle joint lines for couples
-    const parentGroups = {};
-    members.forEach(person => {
-      if (person.parent) {
-        if (!parentGroups[person.parent]) parentGroups[person.parent] = [];
-        parentGroups[person.parent].push(person.id);
-      }
-    });
-
-    // Draw lines from parents to children
     members.forEach(person => {
       if (person.parent) {
         const childEl = document.getElementById(`node-${person.id}`);
@@ -593,18 +583,15 @@
           const cRect = childEl.getBoundingClientRect();
           const pRect = parentEl.getBoundingClientRect();
 
-          // Check if parent has a partner in the same level (e.g., Grandfather & Grandmother)
           let startX = pRect.left + pRect.width / 2;
           const parentObj = members.find(m => m.id === person.parent);
           
           if (parentObj) {
-            // Find other members in the same level who share children with this parent or are partners
-            const partners = members.filter(m => m.parent === parentObj.parent && m.id !== person.parent && (m.relation === 'Grandmother' || m.relation === 'Grandfather' || m.relation === 'Mother' || m.relation === 'Father'));
+            const partners = members.filter(m => m.parent === parentObj.parent && m.id !== person.parent);
             if (partners.length > 0) {
               const partnerEl = document.getElementById(`node-${partners[0].id}`);
               if (partnerEl) {
                 const partnerRect = partnerEl.getBoundingClientRect();
-                // Center point between the couple
                 startX = (Math.min(pRect.left, partnerRect.left) + Math.max(pRect.right, partnerRect.right)) / 2;
               }
             }
@@ -623,4 +610,37 @@
           path.setAttribute('stroke', '#16a34a');
           path.setAttribute('stroke-width', '3');
           path.setAttribute('stroke-linecap', 'round');
-          path
+          path.setAttribute('stroke-linejoin', 'round');
+          path.setAttribute('fill', 'none');
+
+          svg.appendChild(path);
+        }
+      }
+    });
+  }
+
+  function triggerPrint() {
+    drawLines();
+    setTimeout(() => {
+      window.print();
+    }, 300);
+  }
+
+  window.addEventListener('resize', drawLines);
+  
+  if (window.matchMedia) {
+    const mediaQueryList = window.matchMedia('print');
+    mediaQueryList.addEventListener('change', (mql) => {
+      if (mql.matches) {
+        drawLines();
+      }
+    });
+  }
+
+  window.addEventListener('beforeprint', drawLines);
+  updateUI();
+</script>
+
+</body>
+        </html>
+  

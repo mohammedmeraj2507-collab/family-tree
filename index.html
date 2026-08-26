@@ -21,14 +21,11 @@
     .card { 
       background: #ffffff; 
       border-radius: 12px; 
-      padding: 16px; 
+      padding: 20px; 
       margin-bottom: 16px; 
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); 
       border: 1px solid #e2e8f0;
       text-align: left; 
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
     .card h3 { 
@@ -79,65 +76,65 @@
       font-size: 13px; 
     }
     .btn:hover { background: #047857; }
-    .btn-print { background: #2563eb; padding: 10px 24px; font-size: 14px; margin-top: 10px; }
+    .btn-print { background: #2563eb; padding: 12px 28px; font-size: 15px; margin-top: 10px; }
     .btn-print:hover { background: #1d4ed8; }
     
     .header-title { 
       text-align: center; 
-      margin-bottom: 10px; 
-      padding-bottom: 8px;
+      margin-bottom: 14px; 
+      padding-bottom: 10px;
       border-bottom: 2px dashed #94a3b8;
       text-transform: uppercase;
     }
     .header-title h1 { 
-      margin: 0 0 4px 0; 
+      margin: 0 0 6px 0; 
       color: #0f172a; 
-      font-size: 22px; 
+      font-size: 24px; 
       font-weight: 900; 
       letter-spacing: 1px;
     }
     .header-details-line {
       color: #334155;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 600;
-      margin: 2px 0;
-      line-height: 1.3;
+      margin: 3px 0;
+      line-height: 1.4;
     }
     .header-details-line .label { font-weight: 900; color: #000000; }
 
     .tree-container { 
       width: 100%; 
       overflow-x: auto; 
-      padding: 6px 0; 
+      padding: 10px 0; 
       text-align: center; 
     }
     .tf-tree { display: inline-block; text-align: center; }
-    .tf-tree ul { display: flex; padding-top: 12px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
-    .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 12px 3px 0 3px; }
+    .tf-tree ul { display: flex; padding-top: 14px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
+    .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 14px 4px 0 4px; }
     
-    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #64748b; width: 50%; height: 12px; }
+    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #64748b; width: 50%; height: 14px; }
     .tf-tree li::after { right: auto; left: 50%; border-left: 2px solid #64748b; }
     .tf-tree li:only-child::after, .tf-tree li:only-child::before { display: none; }
     .tf-tree li:only-child { padding-top: 0; }
     .tf-tree li:first-child::before, .tf-tree li:last-child::after { border: none; }
     .tf-tree li:last-child::before { border-right: 2px solid #64748b; border-radius: 0 4px 0 0; }
     .tf-tree li:first-child::after { border-radius: 4px 0 0 0; }
-    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #64748b; width: 0; height: 12px; }
+    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #64748b; width: 0; height: 14px; }
     
     .node {
       border: 1.5px solid #cbd5e1;
-      padding: 6px 4px;
+      padding: 8px;
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      border-radius: 8px;
+      border-radius: 10px;
       background: #ffffff;
-      width: 145px;
+      width: 160px;
       position: relative;
       word-break: break-word;
     }
 
-    /* Auto Green Theme for Grandfather / Signal Box */
+    /* Automatic Green Style for Grandfather / Signal */
     .node.signal-box {
       border: 2px solid #16a34a !important;
       background: #f0fdf4 !important;
@@ -148,47 +145,47 @@
     }
 
     .node img { 
-      width: 65px; 
-      height: 75px; 
+      width: 75px; 
+      height: 90px; 
       border-radius: 6px; 
       object-fit: cover; 
       object-position: center top; 
-      margin-bottom: 4px; 
+      margin-bottom: 6px; 
       border: 1.5px solid #cbd5e1;
     }
     .avatar-placeholder { 
-      width: 65px; 
-      height: 75px; 
+      width: 75px; 
+      height: 90px; 
       border-radius: 6px; 
       background: #f1f5f9; 
       color: #64748b;
       display: flex; 
       align-items: center; 
       justify-content: center; 
-      font-size: 22px; 
-      margin-bottom: 4px; 
+      font-size: 26px; 
+      margin-bottom: 6px; 
       border: 1.5px dashed #cbd5e1;
     }
 
     .node-relation { 
-      font-size: 9.5px; 
-      padding: 2px 6px; 
+      font-size: 10px; 
+      padding: 2px 8px; 
       border-radius: 8px; 
       font-weight: 700; 
-      margin-bottom: 3px; 
+      margin-bottom: 4px; 
       background: #f1f5f9; 
       color: #475569; 
       text-transform: uppercase;
     }
-    .node-name { font-weight: 800; font-size: 12px; color: #0f172a; margin-bottom: 3px; line-height: 1.1; }
+    .node-name { font-weight: 800; font-size: 13px; color: #0f172a; margin-bottom: 4px; line-height: 1.1; }
     
-    .node-details { font-size: 10px; color: #475569; text-align: center; line-height: 1.3; width: 100%; }
+    .node-details { font-size: 10.5px; color: #475569; text-align: center; line-height: 1.4; width: 100%; }
     .node-details .val { font-weight: 700; color: #0f172a; }
 
     .delete-btn {
       position: absolute;
-      top: 3px;
-      right: 3px;
+      top: 4px;
+      right: 4px;
       background: #ef4444;
       color: white;
       border: none;
@@ -200,19 +197,19 @@
     }
 
     .declaration-section {
-      margin-top: 10px; 
-      padding: 10px 14px;
+      margin-top: 20px; 
+      padding: 12px 14px;
       border: 1.5px dashed #64748b;
       border-radius: 8px;
       text-align: left;
-      font-size: 11px;
+      font-size: 11.5px;
       color: #334155;
       background: #f8fafc;
     }
     .declaration-title {
       font-weight: 800;
-      font-size: 11.5px;
-      margin-bottom: 3px;
+      font-size: 12px;
+      margin-bottom: 4px;
       color: #0f172a;
       text-decoration: underline;
       text-transform: uppercase;
@@ -220,20 +217,20 @@
 
     .comment-textarea {
       width: 100%;
-      min-height: 34px;
+      min-height: 40px;
       border: 1px solid #cbd5e1;
       border-radius: 4px;
-      padding: 4px 6px;
-      font-size: 11px;
+      padding: 6px;
+      font-size: 11.5px;
       font-family: inherit;
-      resize: none;
+      resize: vertical;
       color: #1e293b;
       background: #ffffff;
-      line-height: 1.3;
+      line-height: 1.4;
     }
 
     .signature-container {
-      margin-top: 24px;
+      margin-top: 35px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -242,45 +239,44 @@
     .sig-box { text-align: center; }
     .sig-line {
       border-top: 1.5px dashed #475569;
-      width: 160px;
-      padding-top: 3px;
-      font-size: 10.5px;
+      width: 170px;
+      padding-top: 4px;
+      font-size: 11px;
       font-weight: 700;
       color: #0f172a;
     }
 
-    /* Print Setup for Strict 1-Page Fit */
+    /* Print Setup Fix - Guarantees 1 Page Fit */
     @page {
-      size: A4 portrait;
-      margin: 4mm;
+      size: auto;
+      margin: 8mm;
     }
     @media print {
-      html, body {
-        height: 100vh;
-        overflow: hidden;
-        background: #fff;
-        padding: 0;
-        margin: 0;
-      }
       .no-print { display: none !important; }
+      body { 
+        background: #fff; 
+        padding: 0; 
+        margin: 0; 
+      }
       .container { max-width: 100%; width: 100%; margin: 0; }
       .card { 
         box-shadow: none; 
         border: none; 
         padding: 0; 
         margin: 0; 
-        height: 98vh;
-        justify-content: space-between; 
+      }
+      .tree-container { overflow: visible; }
+      .declaration-section { 
+        background: transparent; 
+        border: 1.5px dashed #475569; 
         page-break-inside: avoid;
         break-inside: avoid;
       }
-      .tree-container { overflow: visible; zoom: 90%; }
-      .declaration-section { background: transparent; border: 1.5px dashed #475569; }
       .comment-textarea { 
         border: none; 
         padding: 0; 
         background: transparent; 
-        font-size: 10.5px;
+        resize: none;
       }
     }
   </style>
@@ -360,7 +356,7 @@
     </div>
   </div>
 
-  <button class="btn btn-print no-print" onclick="window.print()">Print Document (A4 Fit)</button>
+  <button class="btn btn-print no-print" onclick="window.print()">Print Document (A4)</button>
 </div>
 
 <script>
@@ -389,7 +385,7 @@
     const voterYear = voterYearInput.value.trim();
     const parent = parentSelect.value;
     
-    // Auto Green if Grandfather or explicitly checked
+    // Auto Green for Grandfather
     const isSignal = isSignalInput.checked || relation === 'Grandfather';
     const file = photoInput.files[0];
 
@@ -516,5 +512,5 @@
 </script>
 
 </body>
-  </html>
-  
+        </html>
+        

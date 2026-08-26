@@ -16,12 +16,12 @@
       text-align: center; 
     }
     
-    .container { max-width: 1200px; margin: auto; }
+    .container { max-width: 1100px; margin: auto; }
     
     .card { 
       background: #ffffff; 
       border-radius: 12px; 
-      padding: 20px; 
+      padding: 16px; 
       margin-bottom: 16px; 
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); 
       border: 1px solid #e2e8f0;
@@ -30,22 +30,22 @@
 
     .card h3 { 
       margin-top: 0; 
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: #1e293b; 
       border-bottom: 2px solid #f1f5f9; 
-      padding-bottom: 8px; 
-      margin-bottom: 10px;
+      padding-bottom: 6px; 
+      margin-bottom: 8px;
     }
     
     .form-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; align-items: center; }
     .form-group input[type="text"], .form-group select, .form-group input[type="file"] { 
       flex: 1; 
-      min-width: 150px; 
-      padding: 8px 10px; 
+      min-width: 140px; 
+      padding: 7px 9px; 
       border: 1px solid #cbd5e1; 
       border-radius: 6px; 
-      font-size: 12.5px; 
+      font-size: 12px; 
       font-family: inherit;
       background-color: #f8fafc;
       color: #334155;
@@ -67,37 +67,35 @@
     
     .header-title { 
       text-align: center; 
-      margin-bottom: 14px; 
-      padding-bottom: 10px;
+      margin-bottom: 10px; 
+      padding-bottom: 6px;
       border-bottom: 2px dashed #94a3b8;
       text-transform: uppercase;
     }
     .header-title h1 { 
-      margin: 0 0 6px 0; 
+      margin: 0 0 4px 0; 
       color: #0f172a; 
-      font-size: 24px; 
+      font-size: 20px; 
       font-weight: 900; 
       letter-spacing: 1px;
     }
     .header-details-line {
       color: #334155;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 600;
-      margin: 3px 0;
-      line-height: 1.4;
+      margin: 2px 0;
+      line-height: 1.3;
     }
     .header-details-line .label { font-weight: 900; color: #000000; }
 
-    /* Custom Layout Area */
     .tree-container { 
       position: relative;
       width: 100%; 
       overflow-x: auto; 
-      padding: 20px 0; 
-      min-height: 300px;
+      padding: 10px 0; 
+      min-height: 250px;
     }
 
-    /* SVG Lines Overlay */
     #svg-canvas {
       position: absolute;
       top: 0;
@@ -111,125 +109,124 @@
     .level-row {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      margin-bottom: 50px;
+      gap: 14px;
+      margin-bottom: 35px;
       position: relative;
       z-index: 2;
     }
 
     .node {
       border: 1.5px solid #cbd5e1;
-      padding: 8px;
+      padding: 6px;
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      border-radius: 10px;
+      border-radius: 8px;
       background: #ffffff;
-      width: 160px;
+      width: 135px;
       position: relative;
       word-break: break-word;
       box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     }
 
-    /* Custom Signal / Highlight Styles */
     .node.signal-green {
-      border: 2.5px solid #16a34a !important;
+      border: 2px solid #16a34a !important;
       background: #f0fdf4 !important;
     }
     .node.signal-green .node-relation { background: #dcfce7 !important; color: #15803d !important; }
 
     .node.signal-gold {
-      border: 2.5px solid #d97706 !important;
+      border: 2px solid #d97706 !important;
       background: #fffbe6 !important;
     }
     .node.signal-gold .node-relation { background: #fef3c7 !important; color: #b45309 !important; }
 
     .node.signal-blue {
-      border: 2.5px solid #2563eb !important;
+      border: 2px solid #2563eb !important;
       background: #eff6ff !important;
     }
     .node.signal-blue .node-relation { background: #dbeafe !important; color: #1e40af !important; }
 
     .applicant-badge {
       position: absolute;
-      top: -10px;
+      top: -9px;
       background: #dc2626;
       color: #fff;
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 10px;
+      padding: 1px 5px;
+      border-radius: 8px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
     .node img { 
-      width: 75px; 
-      height: 90px; 
-      border-radius: 6px; 
+      width: 65px; 
+      height: 75px; 
+      border-radius: 5px; 
       object-fit: cover; 
       object-position: center top; 
-      margin-bottom: 6px; 
-      border: 1.5px solid #cbd5e1;
+      margin-bottom: 4px; 
+      border: 1px solid #cbd5e1;
     }
     .avatar-placeholder { 
-      width: 75px; 
-      height: 90px; 
-      border-radius: 6px; 
+      width: 65px; 
+      height: 75px; 
+      border-radius: 5px; 
       background: #f1f5f9; 
       color: #64748b;
       display: flex; 
       align-items: center; 
       justify-content: center; 
-      font-size: 26px; 
-      margin-bottom: 6px; 
-      border: 1.5px dashed #cbd5e1;
+      font-size: 22px; 
+      margin-bottom: 4px; 
+      border: 1px dashed #cbd5e1;
     }
 
     .node-relation { 
-      font-size: 10px; 
-      padding: 2px 8px; 
-      border-radius: 8px; 
+      font-size: 9px; 
+      padding: 1px 6px; 
+      border-radius: 6px; 
       font-weight: 700; 
-      margin-bottom: 4px; 
+      margin-bottom: 3px; 
       background: #f1f5f9; 
       color: #475569; 
       text-transform: uppercase;
     }
-    .node-name { font-weight: 800; font-size: 13px; color: #0f172a; margin-bottom: 4px; line-height: 1.1; }
+    .node-name { font-weight: 800; font-size: 11.5px; color: #0f172a; margin-bottom: 2px; line-height: 1.1; }
     
-    .node-details { font-size: 10.5px; color: #475569; text-align: center; line-height: 1.4; width: 100%; }
+    .node-details { font-size: 9.5px; color: #475569; text-align: center; line-height: 1.3; width: 100%; }
     .node-details .val { font-weight: 700; color: #0f172a; }
 
     .delete-btn {
       position: absolute;
-      top: 4px;
-      right: 4px;
+      top: 3px;
+      right: 3px;
       background: #ef4444;
       color: white;
       border: none;
       border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      font-size: 9px;
+      width: 16px;
+      height: 16px;
+      font-size: 8px;
       cursor: pointer;
     }
 
     .declaration-section {
-      margin-top: 20px; 
-      padding: 12px 14px;
-      border: 1.5px dashed #64748b;
-      border-radius: 8px;
+      margin-top: 10px; 
+      padding: 8px 10px;
+      border: 1px dashed #64748b;
+      border-radius: 6px;
       text-align: left;
-      font-size: 11.5px;
+      font-size: 10.5px;
       color: #334155;
       background: #f8fafc;
     }
     .declaration-title {
       font-weight: 800;
-      font-size: 12px;
-      margin-bottom: 4px;
+      font-size: 11px;
+      margin-bottom: 3px;
       color: #0f172a;
       text-decoration: underline;
       text-transform: uppercase;
@@ -237,20 +234,20 @@
 
     .comment-textarea {
       width: 100%;
-      min-height: 40px;
+      min-height: 32px;
       border: 1px solid #cbd5e1;
       border-radius: 4px;
-      padding: 6px;
-      font-size: 11.5px;
+      padding: 4px 6px;
+      font-size: 10.5px;
       font-family: inherit;
       resize: vertical;
       color: #1e293b;
       background: #ffffff;
-      line-height: 1.4;
+      line-height: 1.3;
     }
 
     .signature-container {
-      margin-top: 35px;
+      margin-top: 25px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -258,26 +255,35 @@
     }
     .sig-box { text-align: center; }
     .sig-line {
-      border-top: 1.5px dashed #475569;
-      width: 170px;
-      padding-top: 4px;
-      font-size: 11px;
+      border-top: 1px dashed #475569;
+      width: 150px;
+      padding-top: 3px;
+      font-size: 10px;
       font-weight: 700;
       color: #0f172a;
     }
 
+    /* Strict Single Page Print Control */
     @page {
       size: A4 portrait;
-      margin: 6mm;
+      margin: 4mm;
     }
     @media print {
+      html, body {
+        height: 100%;
+        overflow: hidden;
+      }
       .no-print { display: none !important; }
       body { background: #fff; padding: 0; margin: 0; }
       .container { max-width: 100%; width: 100%; margin: 0; }
       .card { box-shadow: none; border: none; padding: 0; margin: 0; }
-      .tree-container { overflow: visible; }
-      .declaration-section { background: transparent; border: 1.5px dashed #475569; break-inside: avoid; }
-      .comment-textarea { border: none; padding: 0; background: transparent; resize: none; }
+      .tree-container { overflow: visible; padding: 5px 0; }
+      .level-row { margin-bottom: 25px; gap: 10px; }
+      .node { width: 125px; padding: 4px; }
+      .node img, .avatar-placeholder { width: 55px; height: 65px; }
+      .declaration-section { background: transparent; border: 1px dashed #475569; margin-top: 6px; padding: 6px; }
+      .comment-textarea { border: none; padding: 0; background: transparent; resize: none; min-height: auto; }
+      .signature-container { margin-top: 20px; }
     }
   </style>
 </head>
@@ -471,12 +477,11 @@
     rowsDiv.innerHTML = '';
 
     if (members.length === 0) {
-      rowsDiv.innerHTML = '<p style="color:#94a3b8; font-size:13px; margin-top: 20px; text-align:center;">No members added yet.</p>';
+      rowsDiv.innerHTML = '<p style="color:#94a3b8; font-size:12px; margin-top: 15px; text-align:center;">No members added yet.</p>';
       drawLines();
       return;
     }
 
-    // Group members by level depth
     const levels = {};
     members.forEach(m => {
       const d = getDepth(m.id);
@@ -569,7 +574,7 @@
           const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
           path.setAttribute('d', pathStr);
           path.setAttribute('stroke', '#16a34a');
-          path.setAttribute('stroke-width', '2.5');
+          path.setAttribute('stroke-width', '2');
           path.setAttribute('fill', 'none');
 
           svg.appendChild(path);
@@ -583,5 +588,5 @@
 </script>
 
 </body>
-        </html>
-          
+    </html>
+        

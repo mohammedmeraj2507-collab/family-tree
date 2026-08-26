@@ -116,7 +116,7 @@
     .level-row {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 25px;
       margin-bottom: 45px;
       position: relative;
     }
@@ -276,14 +276,14 @@
     @media print {
       html, body {
         height: 100%;
-        overflow: hidden;
+        width: 100%;
       }
       .no-print { display: none !important; }
       body { background: #fff; padding: 0; margin: 0; }
       .container { max-width: 100%; width: 100%; margin: 0; }
       .card { box-shadow: none; border: none; padding: 0; margin: 0; }
       .tree-container { padding: 5px 0; }
-      .level-row { margin-bottom: 35px; gap: 10px; }
+      .level-row { margin-bottom: 35px; gap: 15px; }
       .node { width: 120px; padding: 4px; }
       .node img, .avatar-placeholder { width: 50px; height: 60px; }
       .header-details-line { font-size: 10px; }
@@ -306,6 +306,7 @@
       <input id="name" type="text" placeholder="Member Name (Required)">
       <select id="relation">
         <option value="Grandfather">Grandfather</option>
+        <option value="Grandmother">Grandmother</option>
         <option value="Father">Father</option>
         <option value="Mother">Mother</option>
         <option value="Son">Son</option>
@@ -323,7 +324,7 @@
       <input id="serialNo" type="text" placeholder="Serial No.">
       <input id="voterYear" type="text" placeholder="Voter List Year (e.g., 2024 / 2026)">
       <select id="parent">
-        <option value="">Select Guardian (Under whom linked?)</option>
+        <option value="">Select Guardian / Link Under</option>
       </select>
     </div>
     <div class="form-group">
@@ -415,7 +416,7 @@
       return;
     }
 
-    if (relation === 'Grandfather' && signalType === 'none') {
+    if ((relation === 'Grandfather' || relation === 'Grandmother') && signalType === 'none') {
       signalType = 'green';
     }
 
@@ -480,7 +481,7 @@
 
   function updateUI() {
     const parentSelect = document.getElementById('parent');
-    parentSelect.innerHTML = '<option value="">Select Guardian (Under whom linked?)</option>';
+    parentSelect.innerHTML = '<option value="">Select Guardian / Link Under</option>';
     members.forEach(m => {
       parentSelect.innerHTML += `<option value="${m.id}">${m.name} (${m.relation})</option>`;
     });
@@ -565,9 +566,11 @@
     
     svg.innerHTML = '';
     
-    // Set explicit width and height matching wrapper
-    svg.setAttribute('width', wrapper.offsetWidth);
-    svg.setAttribute('height', wrapper.offsetHeight);
+    const width = wrapper.clientWidth;
+    const height = wrapper.clientHeight;
+    svg.setAttribute('width', width);
+    svg.setAttribute('height', height);
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
     const wrapperRect = wrapper.getBoundingClientRect();
 
@@ -581,9 +584,9 @@
           const pRect = parentEl.getBoundingClientRect();
 
           const x1 = (pRect.left + pRect.width / 2) - wrapperRect.left;
-          const y1 = pRect.bottom - wrapperRect.top;
+          const y1 = (pRect.bottom - wrapperRect.top);
           const x2 = (cRect.left + cRect.width / 2) - wrapperRect.left;
-          const y2 = cRect.top - wrapperRect.top;
+          const y2 = (cRect.top - wrapperRect.top);
 
           const midY = y1 + (y2 - y1) / 2;
           const pathStr = `M ${x1} ${y1} L ${x1} ${midY} L ${x2} ${midY} L ${x2} ${y2}`;
@@ -606,14 +609,24 @@
     drawLines();
     setTimeout(() => {
       window.print();
-    }, 200);
+    }, 300);
   }
 
   window.addEventListener('resize', drawLines);
+  
+  if (window.matchMedia) {
+    const mediaQueryList = window.matchMedia('print');
+    mediaQueryList.addEventListener('change', (mql) => {
+      if (mql.matches) {
+        drawLines();
+      }
+    });
+  }
+
   window.addEventListener('beforeprint', drawLines);
   updateUI();
 </script>
 
 </body>
         </html>
-        
+  

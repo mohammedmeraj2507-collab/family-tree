@@ -12,7 +12,7 @@
       background: #f8fafc; 
       color: #0f172a;
       margin: 0; 
-      padding: 24px 16px; 
+      padding: 16px; 
       text-align: center; 
     }
     
@@ -21,14 +21,13 @@
     .card { 
       background: #ffffff; 
       border-radius: 16px; 
-      padding: 28px; 
-      margin-bottom: 24px; 
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); 
+      padding: 20px; 
+      margin-bottom: 20px; 
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); 
       border: 1px solid #e2e8f0;
       text-align: left; 
       display: flex;
       flex-direction: column;
-      min-height: 850px; 
     }
 
     .card h3 { 
@@ -37,217 +36,177 @@
       font-weight: 700;
       color: #1e293b; 
       border-bottom: 2px solid #f1f5f9; 
-      padding-bottom: 12px; 
-      margin-bottom: 16px;
+      padding-bottom: 10px; 
+      margin-bottom: 14px;
     }
     
-    .form-group { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+    .form-group { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; align-items: center; }
     .form-group input[type="text"], .form-group select, .form-group input[type="file"] { 
       flex: 1; 
-      min-width: 180px; 
-      padding: 11px 14px; 
+      min-width: 160px; 
+      padding: 9px 12px; 
       border: 1px solid #cbd5e1; 
       border-radius: 8px; 
-      font-size: 13.5px; 
+      font-size: 13px; 
       font-family: inherit;
       background-color: #f8fafc;
-      transition: all 0.2s ease;
       color: #334155;
-    }
-    .form-group input[type="text"]:focus, .form-group select:focus {
-      outline: none;
-      border-color: #2563eb;
-      background-color: #ffffff;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
     .checkbox-label { 
       display: flex; 
       align-items: center; 
-      gap: 8px; 
+      gap: 6px; 
       font-weight: 600; 
-      font-size: 13px; 
+      font-size: 12.5px; 
       color: #15803d; 
       background: #f0fdf4; 
       border: 1px solid #bbf7d0;
-      padding: 10px 14px; 
+      padding: 8px 12px; 
       border-radius: 8px; 
       cursor: pointer; 
-      user-select: none;
     }
     
     .btn { 
       background: #059669; 
       color: white; 
       border: none; 
-      padding: 11px 22px; 
+      padding: 10px 20px; 
       border-radius: 8px; 
       font-weight: 600; 
       cursor: pointer; 
-      font-size: 14px; 
-      font-family: inherit;
-      box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2);
-      transition: all 0.2s;
+      font-size: 13.5px; 
     }
-    .btn:hover { background: #047857; transform: translateY(-1px); }
-    .btn-print { 
-      background: #2563eb; 
-      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
-      padding: 12px 28px;
-    }
+    .btn:hover { background: #047857; }
+    .btn-print { background: #2563eb; padding: 12px 28px; font-size: 15px; }
     .btn-print:hover { background: #1d4ed8; }
     
     .header-title { 
       text-align: center; 
-      margin-bottom: 25px; 
-      padding-bottom: 16px;
+      margin-bottom: 15px; 
+      padding-bottom: 10px;
       border-bottom: 2px dashed #94a3b8;
       text-transform: uppercase;
     }
     .header-title h1 { 
-      margin: 0 0 10px 0; 
+      margin: 0 0 6px 0; 
       color: #0f172a; 
-      font-size: 32px; 
+      font-size: 26px; 
       font-weight: 900; 
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
     }
     .header-details-line {
       color: #334155;
-      font-size: 13.5px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.5px;
-      margin: 6px 0;
-      line-height: 1.6;
+      margin: 3px 0;
+      line-height: 1.4;
     }
-
-    .header-details-line .label {
-      font-weight: 900;
-      color: #000000;
-      letter-spacing: 0.8px;
-    }
+    .header-details-line .label { font-weight: 900; color: #000000; }
 
     .tree-container { 
       width: 100%; 
       overflow-x: auto; 
-      padding: 15px 0; 
+      padding: 10px 0; 
       text-align: center; 
-      flex-grow: 1; 
     }
     .tf-tree { display: inline-block; text-align: center; }
-    .tf-tree ul { display: flex; padding-top: 18px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
-    .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 18px 5px 0 5px; }
+    .tf-tree ul { display: flex; padding-top: 14px; position: relative; justify-content: center; margin: 0; padding-left: 0; }
+    .tf-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 14px 4px 0 4px; }
     
-    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #64748b; width: 50%; height: 18px; }
+    .tf-tree li::before, .tf-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #64748b; width: 50%; height: 14px; }
     .tf-tree li::after { right: auto; left: 50%; border-left: 2px solid #64748b; }
     .tf-tree li:only-child::after, .tf-tree li:only-child::before { display: none; }
     .tf-tree li:only-child { padding-top: 0; }
     .tf-tree li:first-child::before, .tf-tree li:last-child::after { border: none; }
     .tf-tree li:last-child::before { border-right: 2px solid #64748b; border-radius: 0 6px 0 0; }
     .tf-tree li:first-child::after { border-radius: 6px 0 0 0; }
-    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #64748b; width: 0; height: 18px; }
+    .tf-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #64748b; width: 0; height: 14px; }
     
     .node {
       border: 1.5px solid #cbd5e1;
-      padding: 12px 10px;
+      padding: 8px 6px;
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      border-radius: 12px;
+      border-radius: 10px;
       background: #ffffff;
-      width: 165px;
-      height: fit-content;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      width: 155px;
       position: relative;
       word-break: break-word;
-      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .node.signal-box {
       border: 2px solid #16a34a !important;
       background: #f0fdf4 !important;
-      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
-    }
-    .node.signal-box .node-relation {
-      background: #dcfce7 !important;
-      color: #15803d !important;
     }
 
-    /* Zero-Gap Full passport image design */
     .node img { 
-      width: 80px; 
-      height: 95px; 
-      border-radius: 10px; 
+      width: 70px; 
+      height: 85px; 
+      border-radius: 6px; 
       object-fit: cover; 
       object-position: center top; 
-      margin-bottom: 8px; 
-      border: 2px solid #94a3b8;
-      padding: 0; 
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 4px; 
+      border: 1.5px solid #cbd5e1;
     }
     .avatar-placeholder { 
-      width: 80px; 
-      height: 95px; 
-      border-radius: 10px; 
+      width: 70px; 
+      height: 85px; 
+      border-radius: 6px; 
       background: #f1f5f9; 
       color: #64748b;
       display: flex; 
       align-items: center; 
       justify-content: center; 
-      font-size: 30px; 
-      margin-bottom: 8px; 
-      border: 2px dashed #94a3b8;
+      font-size: 24px; 
+      margin-bottom: 4px; 
+      border: 1.5px dashed #cbd5e1;
     }
 
     .node-relation { 
-      font-size: 11px; 
-      padding: 3px 10px; 
-      border-radius: 12px; 
+      font-size: 10px; 
+      padding: 2px 8px; 
+      border-radius: 10px; 
       font-weight: 700; 
-      margin-bottom: 6px; 
+      margin-bottom: 4px; 
       background: #f1f5f9; 
       color: #475569; 
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
-    .node-name { font-weight: 800; font-size: 14px; color: #0f172a; margin-bottom: 6px; line-height: 1.2; }
+    .node-name { font-weight: 800; font-size: 13px; color: #0f172a; margin-bottom: 4px; line-height: 1.1; }
     
-    .node-details { font-size: 11.5px; color: #475569; text-align: center; line-height: 1.5; width: 100%; }
+    .node-details { font-size: 10.5px; color: #475569; text-align: center; line-height: 1.4; width: 100%; }
     .node-details .val { font-weight: 700; color: #0f172a; }
 
     .delete-btn {
       position: absolute;
-      top: 6px;
-      right: 6px;
+      top: 4px;
+      right: 4px;
       background: #ef4444;
       color: white;
       border: none;
       border-radius: 50%;
-      width: 22px;
-      height: 22px;
-      font-size: 11px;
+      width: 20px;
+      height: 20px;
+      font-size: 10px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.8;
-      transition: opacity 0.2s;
     }
-    .delete-btn:hover { opacity: 1; }
 
     .declaration-section {
-      margin-top: auto; 
-      padding: 16px 20px;
+      margin-top: 15px; 
+      padding: 12px 16px;
       border: 1.5px dashed #64748b;
-      border-radius: 12px;
+      border-radius: 10px;
       text-align: left;
-      font-size: 12.5px;
+      font-size: 11.5px;
       color: #334155;
       background: #f8fafc;
     }
     .declaration-title {
       font-weight: 800;
-      font-size: 13.5px;
-      margin-bottom: 8px;
+      font-size: 12px;
+      margin-bottom: 4px;
       color: #0f172a;
       text-decoration: underline;
       text-transform: uppercase;
@@ -255,62 +214,67 @@
 
     .comment-textarea {
       width: 100%;
-      min-height: 50px;
+      min-height: 38px;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 12.5px;
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 11.5px;
       font-family: inherit;
-      resize: vertical;
+      resize: none;
       color: #1e293b;
       background: #ffffff;
-      line-height: 1.5;
+      line-height: 1.4;
     }
 
     .signature-container {
-      margin-top: 45px;
+      margin-top: 30px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       color: #334155;
     }
-    .sig-box {
-      text-align: center;
-    }
+    .sig-box { text-align: center; }
     .sig-line {
       border-top: 1.5px dashed #475569;
-      width: 220px;
-      padding-top: 6px;
-      font-size: 12.5px;
+      width: 180px;
+      padding-top: 4px;
+      font-size: 11px;
       font-weight: 700;
       color: #0f172a;
     }
 
+    /* Print Setup for 1-Page Landscape Fit */
     @page {
       size: A4 landscape;
-      margin: 8mm;
+      margin: 5mm;
     }
     @media print {
+      html, body {
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+        padding: 0;
+        margin: 0;
+      }
       .no-print { display: none !important; }
-      body { background: #fff; padding: 0; margin: 0; }
       .container { max-width: 100%; width: 100%; margin: 0; }
       .card { 
         box-shadow: none; 
         border: none; 
         padding: 0; 
         margin: 0; 
-        height: 98vh; 
+        height: 100vh;
         justify-content: space-between; 
+        page-break-inside: avoid;
+        break-inside: avoid;
       }
-      .tree-container { overflow: visible; zoom: 85%; }
+      .tree-container { overflow: visible; zoom: 80%; }
       .declaration-section { background: transparent; border: 1.5px dashed #475569; margin-top: auto; }
       .comment-textarea { 
         border: none; 
         padding: 0; 
         background: transparent; 
-        resize: none; 
-        font-size: 12px;
-        overflow: hidden;
+        font-size: 11px;
       }
     }
   </style>
@@ -390,7 +354,7 @@
     </div>
   </div>
 
-  <button class="btn btn-print no-print" onclick="window.print()">Print Document (A4)</button>
+  <button class="btn btn-print no-print" onclick="window.print()">Print Document (A4 Landscape)</button>
 </div>
 
 <script>
@@ -490,7 +454,7 @@
     const treeDiv = document.getElementById('tree');
 
     if (roots.length === 0) {
-      treeDiv.innerHTML = '<p style="color:#94a3b8; font-size:14px; margin-top: 40px;">No members added yet. Add "Grandfather" as the first member.</p>';
+      treeDiv.innerHTML = '<p style="color:#94a3b8; font-size:14px; margin-top: 30px;">No members added yet. Add "Grandfather" as the first member.</p>';
       return;
     }
 
@@ -545,4 +509,4 @@
 
 </body>
         </html>
-  
+                                 

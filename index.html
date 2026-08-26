@@ -566,6 +566,15 @@
     
     svg.innerHTML = '';
     
+    // Add arrow marker definitions
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    defs.innerHTML = `
+      <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a" />
+      </marker>
+    `;
+    svg.appendChild(defs);
+
     const width = wrapper.clientWidth;
     const height = wrapper.clientHeight;
     svg.setAttribute('width', width);
@@ -574,73 +583,57 @@
 
     const wrapperRect = wrapper.getBoundingClientRect();
 
-    members.forEach(person => {
-      if (person.parent) {
-        const childEl = document.getElementById(`node-${person.id}`);
-        const parentEl = document.getElementById(`node-${person.parent}`);
-
-        if (childEl && parentEl) {
-          const cRect = childEl.getBoundingClientRect();
-          const pRect = parentEl.getBoundingClientRect();
-
-          let startX = pRect.left + pRect.width / 2;
-          const parentObj = members.find(m => m.id === person.parent);
-          
-          if (parentObj) {
-            const partners = members.filter(m => m.parent === parentObj.parent && m.id !== person.parent);
-            if (partners.length > 0) {
-              const partnerEl = document.getElementById(`node-${partners[0].id}`);
-              if (partnerEl) {
-                const partnerRect = partnerEl.getBoundingClientRect();
-                startX = (Math.min(pRect.left, partnerRect.left) + Math.max(pRect.right, partnerRect.right)) / 2;
-              }
-            }
-          }
-
-          const x1 = startX - wrapperRect.left;
-          const y1 = (pRect.bottom - wrapperRect.top);
-          const x2 = (cRect.left + cRect.width / 2) - wrapperRect.left;
-          const y2 = (cRect.top - wrapperRect.top);
-
-          const midY = y1 + (y2 - y1) / 2;
-          const pathStr = `M ${x1} ${y1} L ${x1} ${midY} L ${x2} ${midY} L ${x2} ${y2}`;
-
-          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          path.setAttribute('d', pathStr);
-          path.setAttribute('stroke', '#16a34a');
-          path.setAttribute('stroke-width', '3');
-          path.setAttribute('stroke-linecap', 'round');
-          path.setAttribute('stroke-linejoin', 'round');
-          path.setAttribute('fill', 'none');
-
-          svg.appendChild(path);
-        }
+    // Group children by parent depth
+    const groups = {};
+    members.forEach(m => {
+      if (m.parent) {
+        if (!groups[m.parent]) groups[m.parent] = [];
+        groups[m.parent].push(m);
       }
     });
-  }
 
-  function triggerPrint() {
-    drawLines();
-    setTimeout(() => {
-      window.print();
-    }, 300);
-  }
+    // Check level 0 couple (Grandfather & Grandmother)
+    const level0 = members.filter(m => getDepth(m.id) === 0);
+    const couples = level0.filter(m => m.relation === 'Grandfather' || m.relation === 'Grandmother');
 
-  window.addEventListener('resize', drawLines);
-  
-  if (window.matchMedia) {
-    const mediaQueryList = window.matchMedia('print');
-    mediaQueryList.addEventListener('change', (mql) => {
-      if (mql.matches) {
-        drawLines();
+    let coupleCenter = null;
+    let coupleY = 0;
+
+    if (couples.length === 2) {
+      const c1El = document.getElementById(`node-${couples[0].id}`);
+      const c2El = document.getElementById(`node-${couples[1].id}`);
+
+      if (c1El && c2El) {
+        const r1 = c1El.getBoundingClientRect();
+        const r2 = c2El.getBoundingClientRect();
+
+        const x1 = (r1.left + r1.width / 2) - wrapperRect.left;
+        const x2 = (r2.left + r2.width / 2) - wrapperRect.left;
+        const yBase = (r1.bottom - wrapperRect.top);
+        const bracketY = yBase + 15;
+
+        coupleCenter = (x1 + x2) / 2;
+        coupleY = bracketY;
+
+        // Draw bracket line connecting Grandfather & Grandmother like image sketch
+        const couplePathStr = `M ${x1} ${yBase} L ${x1} ${bracketY} L ${x2} ${bracketY} L ${x2} ${yBase}`;
+        const couplePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        couplePath.setAttribute('d', couplePathStr);
+        couplePath.setAttribute('stroke', '#16a34a');
+        couplePath.setAttribute('stroke-width', '2.5');
+        couplePath.setAttribute('fill', 'none');
+        svg.appendChild(couplePath);
       }
-    });
-  }
+    }
 
-  window.addEventListener('beforeprint', drawLines);
-  updateUI();
-</script>
+    // Process parents and their children lines with Arrows
+    Object.keys(groups).forEach(parentId => {
+      const children = groups[parentId];
+      const parentEl = document.getElementById(`node-${parentId}`);
+      
+      let startX, startY;
 
-</body>
-        </html>
-  
+      if (coupleCenter !== null && couples.some(c => c.id === parentId)) {
+        startX = coupleCenter;
+        startY = coupleY;
+      } else if (par

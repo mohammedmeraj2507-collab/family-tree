@@ -103,14 +103,14 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1;
+      z-index: 10;
     }
 
     .level-row {
       display: flex;
       justify-content: center;
-      gap: 14px;
-      margin-bottom: 35px;
+      gap: 16px;
+      margin-bottom: 40px;
       position: relative;
       z-index: 2;
     }
@@ -263,7 +263,6 @@
       color: #0f172a;
     }
 
-    /* Strict Single Page Print Control */
     @page {
       size: A4 portrait;
       margin: 4mm;
@@ -278,9 +277,9 @@
       .container { max-width: 100%; width: 100%; margin: 0; }
       .card { box-shadow: none; border: none; padding: 0; margin: 0; }
       .tree-container { overflow: visible; padding: 5px 0; }
-      .level-row { margin-bottom: 25px; gap: 10px; }
-      .node { width: 125px; padding: 4px; }
-      .node img, .avatar-placeholder { width: 55px; height: 65px; }
+      .level-row { margin-bottom: 30px; gap: 8px; }
+      .node { width: 120px; padding: 4px; }
+      .node img, .avatar-placeholder { width: 50px; height: 60px; }
       .declaration-section { background: transparent; border: 1px dashed #475569; margin-top: 6px; padding: 6px; }
       .comment-textarea { border: none; padding: 0; background: transparent; resize: none; min-height: auto; }
       .signature-container { margin-top: 20px; }
@@ -367,7 +366,7 @@
     </div>
   </div>
 
-  <button class="btn btn-print no-print" onclick="window.print()">Print Document (A4)</button>
+  <button class="btn btn-print no-print" onclick="triggerPrint()">Print Document (A4)</button>
 </div>
 
 <script>
@@ -498,7 +497,9 @@
       rowsDiv.appendChild(row);
     });
 
-    setTimeout(drawLines, 50);
+    requestAnimationFrame(() => {
+      drawLines();
+    });
   }
 
   function createNodeHTML(person) {
@@ -574,7 +575,9 @@
           const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
           path.setAttribute('d', pathStr);
           path.setAttribute('stroke', '#16a34a');
-          path.setAttribute('stroke-width', '2');
+          path.setAttribute('stroke-width', '3.5');
+          path.setAttribute('stroke-linecap', 'round');
+          path.setAttribute('stroke-linejoin', 'round');
           path.setAttribute('fill', 'none');
 
           svg.appendChild(path);
@@ -583,10 +586,18 @@
     });
   }
 
+  function triggerPrint() {
+    drawLines();
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  }
+
   window.addEventListener('resize', drawLines);
+  window.onbeforeprint = drawLines;
   updateUI();
 </script>
 
 </body>
-    </html>
+        </html>
         

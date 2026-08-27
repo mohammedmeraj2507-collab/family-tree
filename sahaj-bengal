@@ -1,0 +1,47 @@
+import { PDFDocument, rgb } from 'pdf-lib';
+
+export async function generateSwasthyaBimaPDF(formData, originalPdfUrl) {
+  // ১. অরিজিনাল PDF ফাইল লোড করা
+  const existingPdfBytes = await fetch(originalPdfUrl).then(res => res.arrayBuffer());
+  const pdfDoc = await PDFDocument.load(existingPdfBytes);
+  
+  const pages = pdfDoc.getPages();
+  const firstPage = pages[0];
+
+  // ২. টেক্সট সাইজ ও স্টাইল
+  const textSize = 10;
+  const textColor = rgb(0, 0, 0); // Black
+
+  // ৩. Member 1-এর X, Y Coordinates অনুযায়ী তথ্য বসানো
+  if (formData.member1) {
+    // Aadhaar No
+    firstPage.drawText(formData.member1.aadharNo || '', { x: 140, y: 745, size: textSize, color: textColor });
+    // Applicant Name
+    firstPage.drawText(formData.member1.applicantName || '', { x: 380, y: 745, size: textSize, color: textColor });
+    // Ration Card No
+    firstPage.drawText(formData.member1.rationCardNo || '', { x: 140, y: 720, size: textSize, color: textColor });
+    // Category
+    firstPage.drawText(formData.member1.category || '', { x: 380, y: 720, size: textSize, color: textColor });
+    // Mobile
+    firstPage.drawText(formData.member1.mobile || '', { x: 140, y: 695, size: textSize, color: textColor });
+    // Gender
+    firstPage.drawText(formData.member1.gender || '', { x: 380, y: 695, size: textSize, color: textColor });
+    // DOB
+    firstPage.drawText(formData.member1.dob || '', { x: 140, y: 670, size: textSize, color: textColor });
+    // PAN
+    firstPage.drawText(formData.member1.pan || '', { x: 380, y: 670, size: textSize, color: textColor });
+
+    // Electoral Details
+    firstPage.drawText(formData.member1.epicNo || '', { x: 140, y: 630, size: textSize, color: textColor });
+    firstPage.drawText(formData.member1.acNo || '', { x: 380, y: 630, size: textSize, color: textSize });
+    firstPage.drawText(formData.member1.partNo || '', { x: 140, y: 610, size: textSize, color: textColor });
+    firstPage.drawText(formData.member1.serialNo || '', { x: 380, y: 610, size: textSize, color: textColor });
+  }
+
+  // ৪. অফিসিয়াল সেকশন (Receiving Authority) ফাকাই থাকবে
+
+  // ৫. নতুন PDF সেভ ও রিটার্ন
+  const pdfBytes = await pdfDoc.save();
+  return new Blob([pdfBytes], { type: 'application/pdf' });
+}
+  
